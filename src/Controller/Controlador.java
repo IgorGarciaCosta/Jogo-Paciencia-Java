@@ -67,19 +67,27 @@ public class Controlador {
 
         System.out.printf("\n3 - FUNDACAO1 == ");
         for (int i = 0; i < fundacao1Atual.size(); i++) {
-            System.out.printf(" [<>], ");
+            Carta c = fundacao1Atual.get(i);
+            viraPrimeiraCartaDaPilha(c);
+            System.out.printf(", ");
         }
         System.out.printf("\n4 - FUNDACAO2 == ");
         for (int i = 0; i < fundacao2Atual.size(); i++) {
-            System.out.printf(" [<>], ");
+            Carta c = fundacao2Atual.get(i);
+            viraPrimeiraCartaDaPilha(c);
+            System.out.printf(", ");
         }
         System.out.printf("\n5 - FUNDACAO3 == ");
         for (int i = 0; i < fundacao3Atual.size(); i++) {
-            System.out.printf(" [<>], ");
+            Carta c = fundacao3Atual.get(i);
+            viraPrimeiraCartaDaPilha(c);
+            System.out.printf(", ");
         }
         System.out.printf("\n6 - FUNDACAO4 == ");
         for (int i = 0; i < fundacao4Atual.size(); i++) {
-            System.out.printf(" [<>], ");
+            Carta c = fundacao4Atual.get(i);
+            viraPrimeiraCartaDaPilha(c);
+            System.out.printf(", ");
         }
 
         System.out.printf("\n7 - TABLEAU1 == ");
@@ -219,7 +227,7 @@ public class Controlador {
         //////
     }
 
-    public void moverCarta() {//comporta toda a lógica do movimento das cartas
+    public void moverCarta() {// comporta toda a lógica do movimento das cartas
         jogoJaIniciado = true;
         Scanner resp = new Scanner(System.in);
         int selecao = 0;
@@ -266,53 +274,126 @@ public class Controlador {
                     moverCarta();
                 }
 
+                Carta cartaDoDescarte = descarteAtual.peek();// olha a primeira carta do descarte
                 switch (selecaoFund) {
                 case 1:// fundação1
                     if (fundacao1Atual.empty()) {// caso a fundação esteja vazia
-                        Carta carta = descarteAtual.peek();// olha a primeira carta do descarte
-                        if (carta.getHierarquia().equals("A")) {// se a carta for um Ás
-                            fundacao1Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação1
+                        if (cartaDoDescarte.getHierarquia().equals("A")) {// se a carta for um Ás
+                            fundacao1Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
                         }
                     }
 
                     else {// caso a fundação tenha cartas
+                        Carta cartaDaFundacao = fundacao1Atual.peek();// olha qual carta está no topo da fundação
+                        if (cartaDaFundacao.getHierarquia().equals("A")) {// se a carta da fundação for um Ás, só pode
+                                                                          // add um 2 de mesmo naipe
+                            if (cartaDoDescarte.getNumero().equals("2")) {
+                                if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {// se os naipes
+                                                                                                    // forem iguais
+                                    fundacao1Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
+                                }
+                            }
+                        }
 
+                        else {// se a primeira carta não for um Ás, add uma carta 1 núm maior de mesmo naipe.
+                            if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {
+                                int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
+                                int numCartaDeFundacao = Integer.parseInt(cartaDaFundacao.getNumero());
+                                if ((numCartaDeDescarte - 1) == numCartaDeFundacao) {
+                                    fundacao1Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
+                                }
+                            }
+                        }
                     }
                     break;
                 case 2:// fundação2
                     if (fundacao2Atual.empty()) {// caso a fundação esteja vazia
-                        Carta carta = descarteAtual.peek();// olha a primeira carta do descarte
-                        if (carta.getHierarquia().equals("A")) {// se a carta for um Ás
-                            fundacao2Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação2
+                        if (cartaDoDescarte.getHierarquia().equals("A")) {// se a carta for um Ás
+                            fundacao2Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
                         }
                     }
 
                     else {// caso a fundação tenha cartas
+                        Carta cartaDaFundacao = fundacao2Atual.peek();// olha qual carta está no topo da fundação
+                        if (cartaDaFundacao.getHierarquia().equals("A")) {// se a carta da fundação for um Ás, só pode
+                                                                          // add um 2 de mesmo naipe
+                            if (cartaDoDescarte.getNumero().equals("2")) {
+                                if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {// se os naipes
+                                                                                                    // forem iguais
+                                    fundacao2Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
+                                }
+                            }
+                        }
 
+                        else {// se a primeira carta não for um Ás, add uma carta 1 núm maior de mesmo naipe.
+                            if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {
+                                int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
+                                int numCartaDeFundacao = Integer.parseInt(cartaDaFundacao.getNumero());
+                                if ((numCartaDeDescarte - 1) == numCartaDeFundacao) {
+                                    fundacao2Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
+                                }
+                            }
+                        }
                     }
                     break;
                 case 3:// fundação3
                     if (fundacao3Atual.empty()) {// caso a fundação esteja vazia
-                        Carta carta = descarteAtual.peek();// olha a primeira carta do descarte
-                        if (carta.getHierarquia().equals("A")) {// se a carta for um Ás
-                            fundacao3Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação3
+                        if (cartaDoDescarte.getHierarquia().equals("A")) {// se a carta for um Ás
+                            fundacao3Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
                         }
                     }
 
                     else {// caso a fundação tenha cartas
+                        Carta cartaDaFundacao = fundacao3Atual.peek();// olha qual carta está no topo da fundação
+                        if (cartaDaFundacao.getHierarquia().equals("A")) {// se a carta da fundação for um Ás, só pode
+                                                                          // add um 2 de mesmo naipe
+                            if (cartaDoDescarte.getNumero().equals("2")) {
+                                if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {// se os naipes
+                                                                                                    // forem iguais
+                                    fundacao3Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
+                                }
+                            }
+                        }
 
+                        else {// se a primeira carta não for um Ás, add uma carta 1 núm maior de mesmo naipe.
+                            if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {
+                                int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
+                                int numCartaDeFundacao = Integer.parseInt(cartaDaFundacao.getNumero());
+                                if ((numCartaDeDescarte - 1) == numCartaDeFundacao) {
+                                    fundacao3Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
+                                }
+                            }
+                        }
                     }
                     break;
                 case 4:// fundação4
                     if (fundacao4Atual.empty()) {// caso a fundação esteja vazia
-                        Carta carta = descarteAtual.peek();// olha a primeira carta do descarte
-                        if (carta.getHierarquia().equals("A")) {// se a carta for um Ás
-                            fundacao4Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação4
+                        if (cartaDoDescarte.getHierarquia().equals("A")) {// se a carta for um Ás
+                            fundacao4Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
                         }
                     }
 
                     else {// caso a fundação tenha cartas
+                        Carta cartaDaFundacao = fundacao4Atual.peek();// olha qual carta está no topo da fundação
+                        if (cartaDaFundacao.getHierarquia().equals("A")) {// se a carta da fundação for um Ás, só pode
+                                                                          // add um 2 de mesmo naipe
+                            if (cartaDoDescarte.getNumero().equals("2")) {
+                                if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {// se os naipes
+                                                                                                    // forem iguais
+                                    fundacao4Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
+                                }
+                            }
+                        }
 
+                        else {// se a primeira carta não for um Ás, add uma carta 1 núm maior de mesmo naipe.
+                            if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {
+                                int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
+                                int numCartaDeFundacao = Integer.parseInt(cartaDaFundacao.getNumero());
+                                if ((numCartaDeDescarte - 1) == numCartaDeFundacao) {
+                                    fundacao4Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
+                                }
+                            }
+                        }
                     }
                     break;
                 case 5:
@@ -348,6 +429,7 @@ public class Controlador {
 
     public void finalizaJogo() {
         jogoJaIniciado = false;
+        System.exit(0);
     }
 
     public void reiniciar() {
