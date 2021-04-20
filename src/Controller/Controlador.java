@@ -1,5 +1,6 @@
 package Controller;
 
+import java.util.Stack;
 import java.util.*;
 import Models.Baralho;
 import Models.Carta;
@@ -50,15 +51,19 @@ public class Controlador {
         tableau5Atual = b.getStack("tableau5");
         tableau6Atual = b.getStack("tableau6");
         tableau7Atual = b.getStack("tableau7");
-
+        
         System.out.printf("1 - ESTOQUE == ");
         for (int i = 0; i < estoqueAtual.size(); i++) {
             System.out.printf(" [<>], ");
         }
+
         System.out.printf("\n2 - DESCARTE == ");
         for (int i = 0; i < descarteAtual.size(); i++) {
-            System.out.printf(" [<>], ");
+            Carta c = descarteAtual.get(i);
+            viraPrimeiraCartaDaPilha(c);
+            System.out.printf(", ");
         }
+
         System.out.printf("\n3 - FUNDACAO1 == ");
         for (int i = 0; i < fundacao1Atual.size(); i++) {
             System.out.printf(" [<>], ");
@@ -75,65 +80,95 @@ public class Controlador {
         for (int i = 0; i < fundacao4Atual.size(); i++) {
             System.out.printf(" [<>], ");
         }
+
         System.out.printf("\n7 - TABLEAU1 == ");
-        for (int i = 0; i < tableau1Atual.size(); i++) {
-            viraPrimeiraCartaDaPilha(tableau1Atual);
-        }
+        Carta c = (Carta) tableau1Atual.get(0);
+        viraPrimeiraCartaDaPilha(c);
+        System.out.printf(", ");
+
         System.out.printf("\n8 - TABLEAU2 == ");
-        for (int i = 0; i < tableau2Atual.size(); i++) {
-            if (i == tableau2Atual.size() - 1) {
-                viraPrimeiraCartaDaPilha(tableau2Atual);
-            } else
-                System.out.printf(" [<>], ");
+        for (int i = 1; i <= 2; i++) {
+            if (i <= 1) {
+                System.out.printf("[< >], ");
+            }
+            if (i == 2) {
+                Carta carta = (Carta) tableau2Atual.get(i - 1);
+                viraPrimeiraCartaDaPilha(carta);
+                System.out.printf(", ");
+            }
 
         }
+
         System.out.printf("\n9 - TABLEAU3 == ");
-        for (int i = 0; i < tableau3Atual.size(); i++) {
-            if (i == tableau3Atual.size() - 1) {
-                viraPrimeiraCartaDaPilha(tableau3Atual);
-            } else
-                System.out.printf(" [<>], ");
+        for (int i = 1; i <= 3; i++) {
+            if (i <= 2) {
+                System.out.printf("[< >], ");
+            }
+            if (i == 3) {
+                Carta carta = (Carta) tableau3Atual.get(i - 1);
+                viraPrimeiraCartaDaPilha(carta);
+                System.out.printf(", ");
+            }
+
         }
         System.out.printf("\n10 - TABLEAU4 == ");
-        for (int i = 0; i < tableau4Atual.size(); i++) {
-            if (i == tableau4Atual.size() - 1) {
-                viraPrimeiraCartaDaPilha(tableau4Atual);
-            } else
-                System.out.printf(" [<>], ");
+        for (int i = 1; i <= 4; i++) {
+            if (i <= 3) {
+                System.out.printf("[< >], ");
+            }
+            if (i == 4) {
+                Carta carta = (Carta) tableau4Atual.get(i - 1);
+                viraPrimeiraCartaDaPilha(carta);
+                System.out.printf(", ");
+            }
+
         }
         System.out.printf("\n11 - TABLEAU5 == ");
-        for (int i = 0; i < tableau5Atual.size(); i++) {
-            if (i == tableau5Atual.size() - 1) {
-                viraPrimeiraCartaDaPilha(tableau5Atual);
-            } else
-                System.out.printf(" [<>], ");
+        for (int i = 1; i <= 5; i++) {
+            if (i <= 4) {
+                System.out.printf("[< >], ");
+            }
+            if (i == 5) {
+                Carta carta = (Carta) tableau5Atual.get(i - 1);
+                viraPrimeiraCartaDaPilha(carta);
+                System.out.printf(", ");
+            }
+
         }
         System.out.printf("\n12 - TABLEAU6 == ");
-        for (int i = 0; i < tableau6Atual.size(); i++) {
-            if (i == tableau6Atual.size() - 1) {
-                viraPrimeiraCartaDaPilha(tableau6Atual);
-            } else
-                System.out.printf(" [<>], ");
+        for (int i = 1; i <= 6; i++) {
+            if (i <= 5) {
+                System.out.printf("[< >], ");
+            }
+            if (i == 6) {
+                Carta carta = (Carta) tableau6Atual.get(i - 1);
+                viraPrimeiraCartaDaPilha(carta);
+                System.out.printf(", ");
+            }
+
         }
         System.out.printf("\n13 - TABLEAU7 == ");
-        for (int i = 0; i < tableau7Atual.size(); i++) {
-            if (i == tableau7Atual.size() - 1) {
-                viraPrimeiraCartaDaPilha(tableau7Atual);
-            } else
-                System.out.printf(" [<>], ");
+        for (int i = 1; i <= 7; i++) {
+            if (i <= 6) {
+                System.out.printf("[< >], ");
+            }
+            if (i == 7) {
+                Carta carta = (Carta) tableau7Atual.get(i - 1);
+                viraPrimeiraCartaDaPilha(carta);
+                System.out.printf(", ");
+            }
+
         }
 
     }
 
-    public void viraPrimeiraCartaDaPilha(Stack<Carta> pilhaRecebida) {
-        if (!pilhaRecebida.empty()) {
-            Carta c = pilhaRecebida.peek();
-            c.setFace(true);
-            if (c.getHierarquia().equals("numero")) {// se for carta de número.
-                System.out.printf(c.getNumero() + " " + c.getNaipe());
-            } else if (c.getNumero().equals("sem numero")) {// se for K, D ou J.
-                System.out.printf(c.getHierarquia() + " " + c.getNaipe());
-            }
+    public void viraPrimeiraCartaDaPilha(Carta cartaRecebida) {
+        Carta c = cartaRecebida;
+        c.setFace(true);
+        if (c.getHierarquia().equals("numero")) {// se for carta de número.
+            System.out.printf(c.getNumero() + " " + c.getNaipe());
+        } else if (c.getNumero().equals("sem numero")) {// se for K, D ou J.
+            System.out.printf(c.getHierarquia() + " " + c.getNaipe());
         }
     }
 
