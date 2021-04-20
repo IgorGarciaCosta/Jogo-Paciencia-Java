@@ -7,7 +7,7 @@ import Models.Carta;
 import java.util.List;
 
 public class Controlador {
-    static boolean jogoJaIniciado = false;
+    static public boolean jogoJaIniciado = false;
     static int numDeCartasDoEstoque = 1;
     static Baralho b = new Baralho();
     static public Stack<Carta> estoqueAtual = new Stack<Carta>();
@@ -33,6 +33,7 @@ public class Controlador {
 
     public void exibeJogo() {
         if (!jogoJaIniciado) {// se o jogo não tinha já começado, inicializa o baralho e as pilhas.
+            setStatusDeInicio(true);
             // primeiro preenche as pilhas
             prenchePilhas();
         }
@@ -219,7 +220,8 @@ public class Controlador {
     }
 
     public void moverCarta() {
-        jogoJaIniciado = true;
+        jogoJaIniciado=true;
+        
         Scanner resp = new Scanner(System.in);
         int selecao = 0;
         System.out.println(
@@ -274,4 +276,11 @@ public class Controlador {
         numDeCartasDoEstoque = selecaoDeNumDeCartas;
     }
 
+    public boolean getStatusDeInicio(){
+        return jogoJaIniciado;
+    }
+
+    public void setStatusDeInicio(boolean b){
+        jogoJaIniciado = b;
+    }
 }

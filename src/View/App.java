@@ -31,7 +31,12 @@ public class App {
 
         switch (selecao) {
         case 1:
-            controle.moverCarta();
+            if (controle.getStatusDeInicio()) {
+                controle.moverCarta();
+                controle.exibeJogo();
+            } else {
+                System.out.println("#Você tentou mover uma carta sem iniciar o jogo. Por gentileza, selecione 'EXIBIR JOGO' antes.");
+            }
             break;
 
         case 2:
@@ -46,16 +51,15 @@ public class App {
             System.out.printf("VIRAR 1 OU 3 CARTAS DO ESTOQUE? ");
             try {
                 selecaoDeNumDeCartas = resp.nextInt();
-            }
-            catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("#Valor inválido. Digite números.\n");
                 menu();
             }
             if (selecaoDeNumDeCartas != 1 && selecaoDeNumDeCartas != 3) {
                 System.out.println("#Valor inválido");
                 menu();
-            }
-            else controle.numDeCartasViradasDoEstoque(selecaoDeNumDeCartas);
+            } else
+                controle.numDeCartasViradasDoEstoque(selecaoDeNumDeCartas);
 
             break;
 
