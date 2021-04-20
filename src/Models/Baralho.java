@@ -42,7 +42,7 @@ public class Baralho {
             listaCartas.add(c);
 
             c = new Carta();
-            c.setHierarquia("D");
+            c.setHierarquia("Q");
             c.setNaipe(naipes[pos]);
             listaCartas.add(c);
 

@@ -52,7 +52,7 @@ public class Controlador {
         tableau5Atual = b.getStack("tableau5");
         tableau6Atual = b.getStack("tableau6");
         tableau7Atual = b.getStack("tableau7");
-        
+
         System.out.printf("1 - ESTOQUE == ");
         for (int i = 0; i < estoqueAtual.size(); i++) {
             System.out.printf(" [<>], ");
@@ -219,11 +219,11 @@ public class Controlador {
         //////
     }
 
-    public void moverCarta() {
-        jogoJaIniciado=true;
-        
+    public void moverCarta() {//comporta toda a lógica do movimento das cartas
+        jogoJaIniciado = true;
         Scanner resp = new Scanner(System.in);
         int selecao = 0;
+
         System.out.println(
                 "\nDIGITE DE QUAL PILHA MOVER CARTA:\n\n1 - ESTOQUE\n2 - DESCARTE\n3 - TABLEAU1\n4 - TABLEAU2\n5 - TABLEAU3\n6 - TABLEAU4\n7 - TABLEAU5\n8 - TABLEAU6\n9 - TABLEAU7");
         System.out.printf("\nOpção escolhida: ");
@@ -237,29 +237,111 @@ public class Controlador {
             moverCarta();
         }
 
-        switch (selecao) {
-        case 1:
+        switch (selecao) {// seleciona de qual pilha movera uma carta
+        case 1:// move carta do estoque para o descarte
             if (estoqueAtual.empty())
                 System.out.println("\nO estoque está vazio. :/");
             else {
                 for (int i = 0; i < numDeCartasDoEstoque; i++) {
                     descarteAtual.push(estoqueAtual.pop());
-                    System.out.println(estoqueAtual.size());
                 }
             }
             break;
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 9:
+        case 2:// move carta do descarte para tableaus ou fundações.
+            if (descarteAtual.empty())
+                System.out.println("\nA pilha de descarte está vazia. :/");
+            else {
+                Scanner respFund1 = new Scanner(System.in);
+                int selecaoFund = 0;
+                System.out.println(
+                        "\nDIGITE PARA QUAL PILHA MOVER CARTA:\n\n1 - FUNDACAO1\n2 - FUNDACAO2\n3 - FUNDACAO3\n4 - FUNDACAO4\n5 - TABLEAU1\n6 - TABLEAU2\n6 - TABLEAU3\n8 - TABLEAU4\n9 - TABLEAU5\n10 - TABLEAU6\n11 - TABLEAU7");
+                System.out.printf("\nOpção escolhida: ");
+
+                try {
+                    selecaoFund = respFund1.nextInt();
+                }
+
+                catch (InputMismatchException e) {
+                    System.out.println("#Valor inválido. Digite números.\n");
+                    moverCarta();
+                }
+
+                switch (selecaoFund) {
+                case 1:// fundação1
+                    if (fundacao1Atual.empty()) {// caso a fundação esteja vazia
+                        Carta carta = descarteAtual.peek();// olha a primeira carta do descarte
+                        if (carta.getHierarquia().equals("A")) {// se a carta for um Ás
+                            fundacao1Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação1
+                        }
+                    }
+
+                    else {// caso a fundação tenha cartas
+
+                    }
+                    break;
+                case 2:// fundação2
+                    if (fundacao2Atual.empty()) {// caso a fundação esteja vazia
+                        Carta carta = descarteAtual.peek();// olha a primeira carta do descarte
+                        if (carta.getHierarquia().equals("A")) {// se a carta for um Ás
+                            fundacao2Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação2
+                        }
+                    }
+
+                    else {// caso a fundação tenha cartas
+
+                    }
+                    break;
+                case 3:// fundação3
+                    if (fundacao3Atual.empty()) {// caso a fundação esteja vazia
+                        Carta carta = descarteAtual.peek();// olha a primeira carta do descarte
+                        if (carta.getHierarquia().equals("A")) {// se a carta for um Ás
+                            fundacao3Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação3
+                        }
+                    }
+
+                    else {// caso a fundação tenha cartas
+
+                    }
+                    break;
+                case 4:// fundação4
+                    if (fundacao4Atual.empty()) {// caso a fundação esteja vazia
+                        Carta carta = descarteAtual.peek();// olha a primeira carta do descarte
+                        if (carta.getHierarquia().equals("A")) {// se a carta for um Ás
+                            fundacao4Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação4
+                        }
+                    }
+
+                    else {// caso a fundação tenha cartas
+
+                    }
+                    break;
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                default:
+                    System.out.println("valor do selecaoFund: " + selecaoFund);
+                    System.out.println("#Valor inválido");
+                    moverCarta();
+                    break;
+                }
+            }
+            break;
+        case 3:// move cartas do tableau1 para outros tableaus ou fundações
+        case 4:// move cartas do tableau2 para outros tableaus ou fundações
+        case 5:// move cartas do tableau3 para outros tableaus ou fundações
+        case 6:// move cartas do tableau4 para outros tableaus ou fundações
+        case 7:// move cartas do tableau5 para outros tableaus ou fundações
+        case 8:// move cartas do tableau6 para outros tableaus ou fundações
+        case 9:// move cartas do tableau7 para outros tableaus ou fundações
         default:
             System.out.println("#Valor inválido");
             moverCarta();
-
         }
 
     }
@@ -276,11 +358,11 @@ public class Controlador {
         numDeCartasDoEstoque = selecaoDeNumDeCartas;
     }
 
-    public boolean getStatusDeInicio(){
+    public boolean getStatusDeInicio() {
         return jogoJaIniciado;
     }
 
-    public void setStatusDeInicio(boolean b){
+    public void setStatusDeInicio(boolean b) {
         jogoJaIniciado = b;
     }
 }
