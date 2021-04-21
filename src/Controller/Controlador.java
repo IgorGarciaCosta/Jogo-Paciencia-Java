@@ -24,9 +24,9 @@ public class Controlador {
     static public Stack<Carta> tableau6Atual = new Stack<Carta>();
     static public Stack<Carta> tableau7Atual = new Stack<Carta>();
 
-    private final List<Carta> baralho = b.getBaralho();// coloca o baralho completo no obj baralho.
-
     public List<Carta> shuffle() {// mistura as cartas antes do jogo começar.
+        b = new Baralho();
+        final List<Carta> baralho = b.getBaralho();// coloca o baralho completo no obj baralho.
         Collections.shuffle(baralho);
         return baralho;
     }
@@ -35,7 +35,7 @@ public class Controlador {
         if (!jogoJaIniciado) {// se o jogo não tinha já começado, inicializa o baralho e as pilhas.
             setStatusDeInicio(true);
             // primeiro preenche as pilhas
-            prenchePilhas();
+            preenchePilhas();
         }
 
         // pega as pilhas do objeto b.
@@ -181,7 +181,8 @@ public class Controlador {
         }
     }
 
-    public void prenchePilhas() {// status inicial do jogo
+    public void preenchePilhas() {// status inicial do jogo
+
         List<Carta> baralhoMisturado = shuffle();
         int index = 0;
         Carta c = baralhoMisturado.get(index);
@@ -396,15 +397,18 @@ public class Controlador {
                         }
                     }
                     break;
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                case 11:
-                case 12:
-                case 13:
+                case 5:// tableau1
+                    if (tableau1Atual.empty()) {// se o tableau está vazio, add apenas um Rei ou um 10 (conferir isso)
+
+                    } else {// se há cartas no tableau
+
+                    }
+                case 6:// tableau2
+                case 7:// tableau3
+                case 8:// tableau4
+                case 9:// tableau5
+                case 10:// tableau6
+                case 11:// tableau7
                 default:
                     System.out.println("valor do selecaoFund: " + selecaoFund);
                     System.out.println("#Valor inválido");
@@ -434,6 +438,7 @@ public class Controlador {
 
     public void reiniciar() {
         jogoJaIniciado = false;
+        exibeJogo();
     }
 
     public void numDeCartasViradasDoEstoque(int selecaoDeNumDeCartas) {

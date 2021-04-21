@@ -107,7 +107,7 @@ public class Baralho {
     }
 
     public void setStack(Carta c, String stackDestino) {// recebe a carta e a pilha de destino pra setar a carta lá.
-        //Sim, eu me envergonho desse tanto de if, mas o switch bugou, sorry T-T
+        // Sim, eu me envergonho desse tanto de if, mas o switch bugou, sorry T-T
         if (stackDestino.equals("tableau1")) {
             tableau1.push(c);
         }

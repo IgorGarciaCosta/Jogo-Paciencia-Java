@@ -40,10 +40,6 @@ public class App {
             break;
 
         case 2:
-            // System.out.println("Baralho completo:\n");
-            // Baralho b;
-            // b=new Baralho();
-            // b.imprimirBaralho();
             controle.exibeJogo();
             break;
 
@@ -66,7 +62,6 @@ public class App {
         case 4:
             controle.reiniciar();
             break;
-
         case 5:
             System.out.println("\nObrigado por jogar!");
             controle.finalizaJogo();
