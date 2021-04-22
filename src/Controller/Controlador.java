@@ -24,6 +24,8 @@ public class Controlador {
     static public Stack<Carta> tableau6Atual = new Stack<Carta>();
     static public Stack<Carta> tableau7Atual = new Stack<Carta>();
 
+    //PROBLEMA ATUAL: PASSA A CARTA DO DESCARTE P OS TAB, MAS ELE SÓ VIRA A ULTIMA DO TAB PRA BAIXO
+
     public List<Carta> shuffle() {// mistura as cartas antes do jogo começar.
         b = new Baralho();
         final List<Carta> baralho = b.getBaralho();// coloca o baralho completo no obj baralho.
@@ -96,11 +98,11 @@ public class Controlador {
         System.out.printf(", ");
 
         System.out.printf("\n8 - TABLEAU2 == ");
-        for (int i = 1; i <= 2; i++) {
-            if (i <= 1) {
-                System.out.printf("[< >], ");
+        for (int i = 1; i <= tableau2Atual.size(); i++) {
+            if (i <= tableau2Atual.size() - 1) {
+                System.out.printf("[<>], ");
             }
-            if (i == 2) {
+            if (i == tableau2Atual.size()) {
                 Carta carta = (Carta) tableau2Atual.get(i - 1);
                 viraPrimeiraCartaDaPilha(carta);
                 System.out.printf(", ");
@@ -109,11 +111,11 @@ public class Controlador {
         }
 
         System.out.printf("\n9 - TABLEAU3 == ");
-        for (int i = 1; i <= 3; i++) {
-            if (i <= 2) {
-                System.out.printf("[< >], ");
+        for (int i = 1; i <= tableau3Atual.size(); i++) {
+            if (i <= tableau3Atual.size() - 1) {
+                System.out.printf("[<>], ");
             }
-            if (i == 3) {
+            if (i == tableau3Atual.size()) {
                 Carta carta = (Carta) tableau3Atual.get(i - 1);
                 viraPrimeiraCartaDaPilha(carta);
                 System.out.printf(", ");
@@ -122,10 +124,10 @@ public class Controlador {
         }
         System.out.printf("\n10 - TABLEAU4 == ");
         for (int i = 1; i <= 4; i++) {
-            if (i <= 3) {
-                System.out.printf("[< >], ");
+            if (i <= tableau4Atual.size() - 1) {
+                System.out.printf("[<>], ");
             }
-            if (i == 4) {
+            if (i == tableau4Atual.size()) {
                 Carta carta = (Carta) tableau4Atual.get(i - 1);
                 viraPrimeiraCartaDaPilha(carta);
                 System.out.printf(", ");
@@ -134,10 +136,10 @@ public class Controlador {
         }
         System.out.printf("\n11 - TABLEAU5 == ");
         for (int i = 1; i <= 5; i++) {
-            if (i <= 4) {
-                System.out.printf("[< >], ");
+            if (i <= tableau5Atual.size() - 1) {
+                System.out.printf("[<>], ");
             }
-            if (i == 5) {
+            if (i == tableau5Atual.size()) {
                 Carta carta = (Carta) tableau5Atual.get(i - 1);
                 viraPrimeiraCartaDaPilha(carta);
                 System.out.printf(", ");
@@ -146,10 +148,10 @@ public class Controlador {
         }
         System.out.printf("\n12 - TABLEAU6 == ");
         for (int i = 1; i <= 6; i++) {
-            if (i <= 5) {
-                System.out.printf("[< >], ");
+            if (i <= tableau6Atual.size() - 1) {
+                System.out.printf("[<>], ");
             }
-            if (i == 6) {
+            if (i == tableau6Atual.size()) {
                 Carta carta = (Carta) tableau6Atual.get(i - 1);
                 viraPrimeiraCartaDaPilha(carta);
                 System.out.printf(", ");
@@ -158,10 +160,10 @@ public class Controlador {
         }
         System.out.printf("\n13 - TABLEAU7 == ");
         for (int i = 1; i <= 7; i++) {
-            if (i <= 6) {
-                System.out.printf("[< >], ");
+            if (i <= tableau7Atual.size() - 1) {
+                System.out.printf("[<>], ");
             }
-            if (i == 7) {
+            if (i == tableau7Atual.size()) {
                 Carta carta = (Carta) tableau7Atual.get(i - 1);
                 viraPrimeiraCartaDaPilha(carta);
                 System.out.printf(", ");
@@ -228,6 +230,183 @@ public class Controlador {
         //////
     }
 
+    public void finalizaJogo() {
+        jogoJaIniciado = false;
+        System.exit(0);
+    }
+
+    public void reiniciar() {
+        jogoJaIniciado = false;
+        exibeJogo();
+    }
+
+    public void numDeCartasViradasDoEstoque(int selecaoDeNumDeCartas) {
+        numDeCartasDoEstoque = selecaoDeNumDeCartas;
+    }
+
+    public boolean getStatusDeInicio() {
+        return jogoJaIniciado;
+    }
+
+    public void setStatusDeInicio(boolean b) {
+        jogoJaIniciado = b;
+    }
+
+    public void moveDoDescarteParaTableaus(Carta cartaDoTableau, Carta cartaDoDescarte, Stack<Carta> tableauAtual) {
+        System.out.println("Carta do desc.: " + cartaDoDescarte.getHierarquia() + cartaDoDescarte.getNumero()
+                + cartaDoDescarte.getNaipe());
+        System.out.println("Carta do Tab.: " + cartaDoTableau.getHierarquia() + cartaDoTableau.getNumero()
+                + cartaDoTableau.getNaipe());
+
+        cartaDoTableau = tableauAtual.peek();
+        if (tableauAtual.empty()) {// se o tableau está vazio, add apenas um Rei ou um Ás
+            if (cartaDoDescarte.getNaipe().equals("K") || cartaDoDescarte.getNaipe().equals("A")) {
+                System.out.println("Chegou no push");
+                tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
+                System.out.println("tam. do tab. "+tableauAtual.size());
+            }
+        } else {// se há cartas no tableau, vê se a do descarte é numero ou não.
+            if (cartaDoDescarte.getHierarquia().equals("K")) {// se vier um K, so add se houver um A
+                if (cartaDoTableau.getHierarquia().equals("A")) {
+                    cartaDoDescarte.setFace(true);
+                    System.out.println("Chegou no push");
+                    tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
+                    System.out.println("tam. do tab. "+tableauAtual.size());
+                }
+            }
+            if (cartaDoDescarte.getHierarquia().equals("Q")) {
+                if (cartaDoTableau.getHierarquia().equals("K")) {// se a que está no tableau é um rei,
+                                                                 // confere
+                                                                 // o naipe
+                    // espadas(coração invertido) preto, paus (trevo)preto, copas(coração)vermelho e
+                    // ouros (balão)vermelho
+                    if (cartaDoDescarte.getNaipe().equals("Espadas") || cartaDoDescarte.getNaipe().equals("Paus")) {
+                        if (cartaDoTableau.getNaipe().equals("Copas") || cartaDoTableau.getNaipe().equals("Ouros")) {
+                            cartaDoDescarte.setFace(true);
+                            System.out.println("Chegou no push");
+                            tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
+                            System.out.println("tam. do tab. "+tableauAtual.size());
+                        }
+                    } else if (cartaDoDescarte.getNaipe().equals("Copas")
+                            || cartaDoDescarte.getNaipe().equals("Ouros")) {
+                        if (cartaDoTableau.getNaipe().equals("Espadas") || cartaDoTableau.getNaipe().equals("Paus")) {
+                            cartaDoDescarte.setFace(true);
+                            System.out.println("Chegou no push");
+                            tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
+                            System.out.println("tam. do tab. "+tableauAtual.size());
+                        }
+                    }
+
+                }
+            } else if (cartaDoDescarte.getHierarquia().equals("J")) {
+                if (cartaDoTableau.getHierarquia().equals("Q")) {// se a que está no tableau é um dama,
+                                                                 // confere o Naipe
+                    if (cartaDoDescarte.getNaipe().equals("Espadas") || cartaDoDescarte.getNaipe().equals("Paus")) {
+                        if (cartaDoTableau.getNaipe().equals("Copas") || cartaDoTableau.getNaipe().equals("Ouros")) {
+                            cartaDoDescarte.setFace(true);
+                            System.out.println("Chegou no push");
+                            tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
+                            System.out.println("tam. do tab. "+tableauAtual.size());
+                        }
+                    } else if (cartaDoDescarte.getNaipe().equals("Copas")
+                            || cartaDoDescarte.getNaipe().equals("Ouros")) {
+                        if (cartaDoTableau.getNaipe().equals("Espadas") || cartaDoTableau.getNaipe().equals("Paus")) {
+                            cartaDoDescarte.setFace(true);
+                            System.out.println("Chegou no push");
+                            tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
+                            System.out.println("tam. do tab. "+tableauAtual.size());
+                        }
+                    }
+                }
+
+            } else if (cartaDoTableau.getHierarquia().equals("J")) {// se a tableau é J, vê se a do descartte é 10
+                int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
+                if (numCartaDeDescarte == 10) {// se a carta do descarte é 10, confere os naipes.
+                    if (cartaDoDescarte.getNaipe().equals("Espadas") || cartaDoDescarte.getNaipe().equals("Paus")) {
+                        if (cartaDoTableau.getNaipe().equals("Copas") || cartaDoTableau.getNaipe().equals("Ouros")) {
+                            cartaDoDescarte.setFace(true);
+                            tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca no tableau
+                            System.out.println("tam. do tab. "+tableauAtual.size());
+                        }
+                    } else if (cartaDoDescarte.getNaipe().equals("Copas")
+                            || cartaDoDescarte.getNaipe().equals("Ouros")) {
+                        if (cartaDoTableau.getNaipe().equals("Espadas") || cartaDoTableau.getNaipe().equals("Paus")) {
+                            cartaDoDescarte.setFace(true);
+                            tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca no tableau
+                            System.out.println("tam. do tab. "+tableauAtual.size());
+                        }
+                    }
+                }
+
+            }
+
+            else {// se forem ambas cartas de número.
+                int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
+                int numCartaDeTableau = Integer.parseInt(cartaDoTableau.getNumero());
+                System.out.println("Nums. das cartas desc tab: " + numCartaDeDescarte + " " + numCartaDeTableau);
+                if (cartaDoDescarte.getNaipe().equals("Espadas") || cartaDoDescarte.getNaipe().equals("Paus")) {// se
+                                                                                                                       // a
+                                                                                                                       // carta
+                                                                                                                       // do
+                                                                                                                       // descarte
+                                                                                                                       // não
+                                                                                                                       // é
+                                                                                                                       // 10,
+                                                                                                                       // confere
+                                                                                                                       // o
+                                                                                                                       // naipe
+                    if (cartaDoTableau.getNaipe().equals("Copas") || cartaDoTableau.getNaipe().equals("Ouros")) {
+                        if (numCartaDeDescarte == (numCartaDeTableau - 1)) {
+                            cartaDoDescarte.setFace(true);
+                            tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca no tableau
+                            System.out.println("tam. do tab. "+tableauAtual.size());
+                        }
+                    }
+                } else if (cartaDoDescarte.getNaipe().equals("Copas") || cartaDoDescarte.getNaipe().equals("Ouros")) {
+                    if (cartaDoTableau.getNaipe().equals("Espadas") || cartaDoTableau.getNaipe().equals("Paus")) {
+                        if (numCartaDeDescarte == (numCartaDeTableau - 1)) {
+                            cartaDoDescarte.setFace(true);
+                            tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca no tableau
+                            System.out.println("tam. do tab. "+tableauAtual.size());
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    public void moveDoDescarteParaFundacoes(Carta cartaDoDescarte, Stack<Carta> fundacaoAtual) {
+        if (fundacaoAtual.empty()) {// caso a fundação esteja vazia
+            if (cartaDoDescarte.getHierarquia().equals("A")) {// se a carta for um Ás
+                fundacaoAtual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
+            }
+        }
+
+        else {// caso a fundação tenha cartas
+            Carta cartaDaFundacao = fundacaoAtual.peek();// olha qual carta está no topo da fundação
+            if (cartaDaFundacao.getHierarquia().equals("A")) {// se a carta da fundação for um Ás, só pode
+                                                              // add um 2 de mesmo naipe
+                if (cartaDoDescarte.getNumero().equals("2")) {
+                    if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {// se os naipes
+                                                                                        // forem iguais
+                        fundacaoAtual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
+                    }
+                }
+            }
+
+            else {// se a primeira carta não for um Ás, add uma carta 1 núm maior de mesmo naipe.
+                if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {
+                    int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
+                    int numCartaDeFundacao = Integer.parseInt(cartaDaFundacao.getNumero());
+                    if ((numCartaDeDescarte - 1) == numCartaDeFundacao) {
+                        fundacaoAtual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
+                    }
+                }
+            }
+        }
+    }
+
     public void moverCarta() {// comporta toda a lógica do movimento das cartas
         jogoJaIniciado = true;
         Scanner resp = new Scanner(System.in);
@@ -263,7 +442,7 @@ public class Controlador {
                 Scanner respFund1 = new Scanner(System.in);
                 int selecaoFund = 0;
                 System.out.println(
-                        "\nDIGITE PARA QUAL PILHA MOVER CARTA:\n\n1 - FUNDACAO1\n2 - FUNDACAO2\n3 - FUNDACAO3\n4 - FUNDACAO4\n5 - TABLEAU1\n6 - TABLEAU2\n6 - TABLEAU3\n8 - TABLEAU4\n9 - TABLEAU5\n10 - TABLEAU6\n11 - TABLEAU7");
+                        "\nDIGITE PARA QUAL PILHA MOVER CARTA:\n\n1 - FUNDACAO1\n2 - FUNDACAO2\n3 - FUNDACAO3\n4 - FUNDACAO4\n5 - TABLEAU1\n6 - TABLEAU2\n7 - TABLEAU3\n8 - TABLEAU4\n9 - TABLEAU5\n10 - TABLEAU6\n11 - TABLEAU7");
                 System.out.printf("\nOpção escolhida: ");
 
                 try {
@@ -276,139 +455,48 @@ public class Controlador {
                 }
 
                 Carta cartaDoDescarte = descarteAtual.peek();// olha a primeira carta do descarte
+
                 switch (selecaoFund) {
                 case 1:// fundação1
-                    if (fundacao1Atual.empty()) {// caso a fundação esteja vazia
-                        if (cartaDoDescarte.getHierarquia().equals("A")) {// se a carta for um Ás
-                            fundacao1Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                        }
-                    }
-
-                    else {// caso a fundação tenha cartas
-                        Carta cartaDaFundacao = fundacao1Atual.peek();// olha qual carta está no topo da fundação
-                        if (cartaDaFundacao.getHierarquia().equals("A")) {// se a carta da fundação for um Ás, só pode
-                                                                          // add um 2 de mesmo naipe
-                            if (cartaDoDescarte.getNumero().equals("2")) {
-                                if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {// se os naipes
-                                                                                                    // forem iguais
-                                    fundacao1Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                                }
-                            }
-                        }
-
-                        else {// se a primeira carta não for um Ás, add uma carta 1 núm maior de mesmo naipe.
-                            if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {
-                                int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
-                                int numCartaDeFundacao = Integer.parseInt(cartaDaFundacao.getNumero());
-                                if ((numCartaDeDescarte - 1) == numCartaDeFundacao) {
-                                    fundacao1Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                                }
-                            }
-                        }
-                    }
+                    moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao1Atual);
                     break;
                 case 2:// fundação2
-                    if (fundacao2Atual.empty()) {// caso a fundação esteja vazia
-                        if (cartaDoDescarte.getHierarquia().equals("A")) {// se a carta for um Ás
-                            fundacao2Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                        }
-                    }
-
-                    else {// caso a fundação tenha cartas
-                        Carta cartaDaFundacao = fundacao2Atual.peek();// olha qual carta está no topo da fundação
-                        if (cartaDaFundacao.getHierarquia().equals("A")) {// se a carta da fundação for um Ás, só pode
-                                                                          // add um 2 de mesmo naipe
-                            if (cartaDoDescarte.getNumero().equals("2")) {
-                                if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {// se os naipes
-                                                                                                    // forem iguais
-                                    fundacao2Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                                }
-                            }
-                        }
-
-                        else {// se a primeira carta não for um Ás, add uma carta 1 núm maior de mesmo naipe.
-                            if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {
-                                int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
-                                int numCartaDeFundacao = Integer.parseInt(cartaDaFundacao.getNumero());
-                                if ((numCartaDeDescarte - 1) == numCartaDeFundacao) {
-                                    fundacao2Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                                }
-                            }
-                        }
-                    }
+                    moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao2Atual);
                     break;
                 case 3:// fundação3
-                    if (fundacao3Atual.empty()) {// caso a fundação esteja vazia
-                        if (cartaDoDescarte.getHierarquia().equals("A")) {// se a carta for um Ás
-                            fundacao3Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                        }
-                    }
-
-                    else {// caso a fundação tenha cartas
-                        Carta cartaDaFundacao = fundacao3Atual.peek();// olha qual carta está no topo da fundação
-                        if (cartaDaFundacao.getHierarquia().equals("A")) {// se a carta da fundação for um Ás, só pode
-                                                                          // add um 2 de mesmo naipe
-                            if (cartaDoDescarte.getNumero().equals("2")) {
-                                if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {// se os naipes
-                                                                                                    // forem iguais
-                                    fundacao3Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                                }
-                            }
-                        }
-
-                        else {// se a primeira carta não for um Ás, add uma carta 1 núm maior de mesmo naipe.
-                            if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {
-                                int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
-                                int numCartaDeFundacao = Integer.parseInt(cartaDaFundacao.getNumero());
-                                if ((numCartaDeDescarte - 1) == numCartaDeFundacao) {
-                                    fundacao3Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                                }
-                            }
-                        }
-                    }
+                    moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao3Atual);
                     break;
                 case 4:// fundação4
-                    if (fundacao4Atual.empty()) {// caso a fundação esteja vazia
-                        if (cartaDoDescarte.getHierarquia().equals("A")) {// se a carta for um Ás
-                            fundacao4Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                        }
-                    }
-
-                    else {// caso a fundação tenha cartas
-                        Carta cartaDaFundacao = fundacao4Atual.peek();// olha qual carta está no topo da fundação
-                        if (cartaDaFundacao.getHierarquia().equals("A")) {// se a carta da fundação for um Ás, só pode
-                                                                          // add um 2 de mesmo naipe
-                            if (cartaDoDescarte.getNumero().equals("2")) {
-                                if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {// se os naipes
-                                                                                                    // forem iguais
-                                    fundacao4Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                                }
-                            }
-                        }
-
-                        else {// se a primeira carta não for um Ás, add uma carta 1 núm maior de mesmo naipe.
-                            if (cartaDoDescarte.getNaipe().equals(cartaDaFundacao.getNaipe())) {
-                                int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
-                                int numCartaDeFundacao = Integer.parseInt(cartaDaFundacao.getNumero());
-                                if ((numCartaDeDescarte - 1) == numCartaDeFundacao) {
-                                    fundacao4Atual.push(descarteAtual.pop());// tira do descarte e coloca na fundação
-                                }
-                            }
-                        }
-                    }
+                    moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao4Atual);
                     break;
                 case 5:// tableau1
-                    if (tableau1Atual.empty()) {// se o tableau está vazio, add apenas um Rei ou um 10 (conferir isso)
-
-                    } else {// se há cartas no tableau
-
-                    }
+                    Carta cartaDoTableau = tableau1Atual.peek();
+                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau1Atual);
+                    break;
                 case 6:// tableau2
+                    cartaDoTableau = tableau2Atual.peek();
+                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau2Atual);
+                    break;
                 case 7:// tableau3
+                    cartaDoTableau = tableau3Atual.peek();
+                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau3Atual);
+                    break;
                 case 8:// tableau4
+                    cartaDoTableau = tableau4Atual.peek();
+                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau4Atual);
+                    break;
                 case 9:// tableau5
+                    cartaDoTableau = tableau5Atual.peek();
+                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau5Atual);
+                    break;
                 case 10:// tableau6
+                    cartaDoTableau = tableau6Atual.peek();
+                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau6Atual);
+                    break;
                 case 11:// tableau7
+                    cartaDoTableau = tableau7Atual.peek();
+                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau7Atual);
+                    break;
                 default:
                     System.out.println("valor do selecaoFund: " + selecaoFund);
                     System.out.println("#Valor inválido");
@@ -431,25 +519,4 @@ public class Controlador {
 
     }
 
-    public void finalizaJogo() {
-        jogoJaIniciado = false;
-        System.exit(0);
-    }
-
-    public void reiniciar() {
-        jogoJaIniciado = false;
-        exibeJogo();
-    }
-
-    public void numDeCartasViradasDoEstoque(int selecaoDeNumDeCartas) {
-        numDeCartasDoEstoque = selecaoDeNumDeCartas;
-    }
-
-    public boolean getStatusDeInicio() {
-        return jogoJaIniciado;
-    }
-
-    public void setStatusDeInicio(boolean b) {
-        jogoJaIniciado = b;
-    }
 }
