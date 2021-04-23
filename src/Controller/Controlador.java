@@ -24,9 +24,6 @@ public class Controlador {
     static public Stack<Carta> tableau6Atual = new Stack<Carta>();
     static public Stack<Carta> tableau7Atual = new Stack<Carta>();
 
-    // PROBLEMA ATUAL: PASSA A CARTA DO DESCARTE P OS TAB, MAS ELE SÓ VIRA A ULTIMA
-    // DO TAB PRA BAIXO
-
     public List<Carta> shuffle() {// mistura as cartas antes do jogo começar.
         b = new Baralho();
         final List<Carta> baralho = b.getBaralho();// coloca o baralho completo no obj baralho.
@@ -34,7 +31,7 @@ public class Controlador {
         return baralho;
     }
 
-    public void exibeCartaTableau(Carta carta, Stack <Carta> tableauAtual, int i) {
+    public void exibeCartaTableau(Carta carta, Stack<Carta> tableauAtual, int i) {
         if (!carta.getFace()) {
             System.out.printf("[<>], ");
         } else {
@@ -79,6 +76,7 @@ public class Controlador {
         }
 
         System.out.printf("\n3 - FUNDACAO1 == ");
+
         for (int i = 0; i < fundacao1Atual.size(); i++) {
             Carta c = fundacao1Atual.get(i);
             viraPrimeiraCartaDaPilha(c);
@@ -113,87 +111,32 @@ public class Controlador {
         for (int i = 0; i < tableau2Atual.size(); i++) {
             Carta carta = (Carta) tableau2Atual.get(i);
             exibeCartaTableau(carta, tableau2Atual, i);
-            // if (i <= tableau2Atual.size() - 1) {
-            // System.out.printf("[<>], ");
-            // }
-            // if (i == tableau2Atual.size()) {
-            // carta = (Carta) tableau2Atual.get(i - 1);
-            // viraPrimeiraCartaDaPilha(carta);
-            // System.out.printf(", ");
-            // }
-            
-
         }
 
         System.out.printf("\n9 - TABLEAU3 == ");
         for (int i = 0; i < tableau3Atual.size(); i++) {
             Carta carta = (Carta) tableau3Atual.get(i);
             exibeCartaTableau(carta, tableau3Atual, i);
-            // if (i <= tableau3Atual.size() - 1) {
-            //     System.out.printf("[<>], ");
-            // }
-            // if (i == tableau3Atual.size()) {
-            //     Carta carta = (Carta) tableau3Atual.get(i - 1);
-            //     viraPrimeiraCartaDaPilha(carta);
-            //     System.out.printf(", ");
-            // }
-
         }
         System.out.printf("\n10 - TABLEAU4 == ");
         for (int i = 0; i < tableau4Atual.size(); i++) {
             Carta carta = (Carta) tableau4Atual.get(i);
             exibeCartaTableau(carta, tableau4Atual, i);
-            // if (i <= tableau4Atual.size() - 1) {
-            //     System.out.printf("[<>], ");
-            // }
-            // if (i == tableau4Atual.size()) {
-            //     Carta carta = (Carta) tableau4Atual.get(i - 1);
-            //     viraPrimeiraCartaDaPilha(carta);
-            //     System.out.printf(", ");
-            // }
-
         }
         System.out.printf("\n11 - TABLEAU5 == ");
         for (int i = 0; i < tableau5Atual.size(); i++) {
             Carta carta = (Carta) tableau5Atual.get(i);
             exibeCartaTableau(carta, tableau5Atual, i);
-            // if (i <= tableau5Atual.size() - 1) {
-            //     System.out.printf("[<>], ");
-            // }
-            // if (i == tableau5Atual.size()) {
-            //     Carta carta = (Carta) tableau5Atual.get(i - 1);
-            //     viraPrimeiraCartaDaPilha(carta);
-            //     System.out.printf(", ");
-            // }
-
         }
         System.out.printf("\n12 - TABLEAU6 == ");
         for (int i = 0; i < tableau6Atual.size(); i++) {
             Carta carta = (Carta) tableau6Atual.get(i);
             exibeCartaTableau(carta, tableau6Atual, i);
-            // if (i <= tableau6Atual.size() - 1) {
-            //     System.out.printf("[<>], ");
-            // }
-            // if (i == tableau6Atual.size()) {
-            //     Carta carta = (Carta) tableau6Atual.get(i - 1);
-            //     viraPrimeiraCartaDaPilha(carta);
-            //     System.out.printf(", ");
-            // }
-
         }
         System.out.printf("\n13 - TABLEAU7 == ");
         for (int i = 0; i < tableau7Atual.size(); i++) {
             Carta carta = (Carta) tableau7Atual.get(i);
             exibeCartaTableau(carta, tableau7Atual, i);
-            // if (i <= tableau7Atual.size() - 1) {
-            //     System.out.printf("[<>], ");
-            // }
-            // if (i == tableau7Atual.size()) {
-            //     Carta carta = (Carta) tableau7Atual.get(i - 1);
-            //     viraPrimeiraCartaDaPilha(carta);
-            //     System.out.printf(", ");
-            // }
-
         }
 
     }
@@ -218,46 +161,52 @@ public class Controlador {
         b.setStack(c, "tableau1");// tableau1
         index++;
         for (int i = 0; i < 2; i++) {// tableau2
-            
+
             c = baralhoMisturado.get(index);
             b.setStack(c, "tableau2");
             index++;
-            if(i==1) c.setFace(true);
+            if (i == 1)
+                c.setFace(true);
         }
         for (int i = 0; i < 3; i++) {// tableau3
-            
+
             c = baralhoMisturado.get(index);
             b.setStack(c, "tableau3");
             index++;
-            if(i==2) c.setFace(true);
+            if (i == 2)
+                c.setFace(true);
         }
         for (int i = 0; i < 4; i++) {// tableau4
-            
+
             c = baralhoMisturado.get(index);
             b.setStack(c, "tableau4");
             index++;
-            if(i==3) c.setFace(true);
+            if (i == 3)
+                c.setFace(true);
         }
         for (int i = 0; i < 5; i++) {// tableau5
-            
+
             c = baralhoMisturado.get(index);
             b.setStack(c, "tableau5");
             index++;
-            if(i==4) c.setFace(true);
+            if (i == 4)
+                c.setFace(true);
         }
         for (int i = 0; i < 6; i++) {// tableau6
-            
+
             c = baralhoMisturado.get(index);
             b.setStack(c, "tableau6");
             index++;
-            if(i==5) c.setFace(true);
+            if (i == 5)
+                c.setFace(true);
         }
         for (int i = 0; i < 7; i++) {// tableau7
-            
+
             c = baralhoMisturado.get(index);
             b.setStack(c, "tableau7");
             index++;
-            if(i==6) c.setFace(true);
+            if (i == 6)
+                c.setFace(true);
         }
         for (int i = 0; i < 24; i++) {// estoque
             c = baralhoMisturado.get(index);
@@ -407,6 +356,55 @@ public class Controlador {
         }
     }
 
+    public void perguntaProUsuarioTableauDestino(int numDoTableauAtual) {
+        Scanner resp = new Scanner(System.in);
+        int selecao = 0;
+        int numtableauSelecionado = 0;
+        System.out.println(
+                "\nDIGITE PARA QUAL PILHA MOVER CARTA:\n\n1 - FUNDACAO1\n2 - FUNDACAO2\n3 - FUNDACAO3\n4 - FUNDACAO4\n5 - TABLEAU1\n6 - TABLEAU2\n7 - TABLEAU3\n8 - TABLEAU4\n9 - TABLEAU5\n10 - TABLEAU6\n11 - TABLEAU7");
+        System.out.printf("\nOpção escolhida: ");
+
+        try {
+            selecao = resp.nextInt();
+        }
+
+        catch (InputMismatchException e) {
+            System.out.println("#Valor inválido. Digite números.\n");
+            moverCarta();
+        }
+
+        switch (selecao) {
+        case 5:
+            numtableauSelecionado = 1;
+            break;
+        case 6:
+            numtableauSelecionado = 2;
+            break;
+        case 7:
+            numtableauSelecionado = 3;
+            break;
+        case 8:
+            numtableauSelecionado = 4;
+            break;
+        case 9:
+            numtableauSelecionado = 5;
+            break;
+        case 10:
+            numtableauSelecionado = 6;
+            break;
+        case 11:
+            numtableauSelecionado = 7;
+            break;
+
+        }
+
+        if (numDoTableauAtual == numtableauSelecionado) {// se tentar mover para o mesmo tableau que está, não permite;
+            System.out.println(
+                    "#Você está tentando mover para o mesmo tableau de onde tirou a carta, por gentileza, escolha outro.");
+            perguntaProUsuarioTableauDestino(numDoTableauAtual);
+        }
+    }
+
     public void moveDoDescarteParaFundacoes(Carta cartaDoDescarte, Stack<Carta> fundacaoAtual) {
         if (fundacaoAtual.empty()) {// caso a fundação esteja vazia
             if (cartaDoDescarte.getHierarquia().equals("A")) {// se a carta for um Ás
@@ -537,12 +535,26 @@ public class Controlador {
             }
             break;
         case 3:// move cartas do tableau1 para outros tableaus ou fundações
+            perguntaProUsuarioTableauDestino(1);
+            break;
         case 4:// move cartas do tableau2 para outros tableaus ou fundações
+            perguntaProUsuarioTableauDestino(2);
+            break;
         case 5:// move cartas do tableau3 para outros tableaus ou fundações
+            perguntaProUsuarioTableauDestino(3);
+            break;
         case 6:// move cartas do tableau4 para outros tableaus ou fundações
+            perguntaProUsuarioTableauDestino(4);
+            break;
         case 7:// move cartas do tableau5 para outros tableaus ou fundações
+            perguntaProUsuarioTableauDestino(5);
+            break;
         case 8:// move cartas do tableau6 para outros tableaus ou fundações
+            perguntaProUsuarioTableauDestino(6);
+            break;
         case 9:// move cartas do tableau7 para outros tableaus ou fundações
+            perguntaProUsuarioTableauDestino(7);
+            break;
         default:
             System.out.println("#Valor inválido");
             moverCarta();
