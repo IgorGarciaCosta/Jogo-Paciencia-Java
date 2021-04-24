@@ -102,9 +102,11 @@ public class Controlador {
         }
 
         System.out.printf("\n7 - TABLEAU1 == ");
-        Carta c = (Carta) tableau1Atual.get(0);
-        viraPrimeiraCartaDaPilha(c);
-        System.out.printf(", ");
+        for (int i = 0; i < tableau1Atual.size(); i++) {
+            Carta carta = (Carta) tableau1Atual.get(i);
+            viraPrimeiraCartaDaPilha(carta);
+            System.out.printf(", ");
+        }
 
         System.out.printf("\n8 - TABLEAU2 == ");
 
@@ -356,7 +358,7 @@ public class Controlador {
         }
     }
 
-    public void perguntaProUsuarioTableauDestino(int numDoTableauAtual) {
+    public int perguntaProUsuarioDestino(int numDoTableauAtual) {
         Scanner resp = new Scanner(System.in);
         int selecao = 0;
         int numtableauSelecionado = 0;
@@ -374,6 +376,14 @@ public class Controlador {
         }
 
         switch (selecao) {
+        case 1:
+            return 11;
+        case 2:
+            return 12;
+        case 3:
+            return 13;
+        case 4:
+            return 14;
         case 5:
             numtableauSelecionado = 1;
             break;
@@ -401,8 +411,12 @@ public class Controlador {
         if (numDoTableauAtual == numtableauSelecionado) {// se tentar mover para o mesmo tableau que está, não permite;
             System.out.println(
                     "#Você está tentando mover para o mesmo tableau de onde tirou a carta, por gentileza, escolha outro.");
-            perguntaProUsuarioTableauDestino(numDoTableauAtual);
+            numtableauSelecionado = 0;
+            perguntaProUsuarioDestino(numDoTableauAtual);
         }
+
+        return 0;
+
     }
 
     public void moveDoDescarteParaFundacoes(Carta cartaDoDescarte, Stack<Carta> fundacaoAtual) {
@@ -435,6 +449,57 @@ public class Controlador {
             }
         }
     }
+
+    public void moveDoTableauParaFundacoes(Stack<Carta> tableauAtual, Stack<Carta> fundacaoAtual) {
+        Carta cartaTableau = tableauAtual.peek();
+
+        System.out.println("Carta do tab: " + cartaTableau.getHierarquia() + cartaTableau.getNaipe());
+
+        System.out.println("Entrou na função de mover");
+
+        if (fundacaoAtual.empty()) {// caso a fundação esteja vazia
+            System.out.println("Fund tava vazia");
+            if (cartaTableau.getHierarquia().equals("A")) {// se a carta for um Ás
+                fundacaoAtual.push(tableauAtual.pop());// tira do descarte e coloca na fundação
+                System.out.println("tam da fun agr: " + fundacaoAtual.size());
+            }
+        }
+
+        else {// caso a fundação tenha cartas
+            Carta cartaFundacao = fundacaoAtual.peek();// olha qual carta está no topo da fundação
+            if (cartaFundacao.getHierarquia().equals("A")) {// se a carta da fundação for um Ás, só pode
+                                                            // add um 2 de mesmo naipe
+                if (cartaTableau.getNumero().equals("2")) {
+                    if (cartaTableau.getNaipe().equals(cartaFundacao.getNaipe())) {// se os naipes
+                                                                                   // forem iguais
+                        fundacaoAtual.push(tableauAtual.pop());// tira do descarte e coloca na fundação
+                    }
+                }
+            }
+
+            else {// se a primeira carta não for um Ás, add uma carta 1 núm maior de mesmo naipe.
+                if (cartaTableau.getNaipe().equals(cartaFundacao.getNaipe())) {
+                    int numCartaTableau = Integer.parseInt(cartaTableau.getNumero());
+                    int numCartaFundacao = Integer.parseInt(cartaFundacao.getNumero());
+                    if ((numCartaTableau - 1) == numCartaFundacao) {
+                        fundacaoAtual.push(tableauAtual.pop());// tira do descarte e coloca na fundação
+                    }
+                }
+            }
+        }
+
+    }
+
+    public void moveDoTableauParaTableaus() {
+
+    }
+
+
+    //IMPLEMENTAR FUNÇÃO P VIRAR CARTA SE ALGUMA FOR RETIRADA E A DE BAIXO ESTIVER VIRADA P BAIXO
+    public void viraCartaDoTabSeForPrimeira(){
+
+    }
+
 
     public void moverCarta() {// comporta toda a lógica do movimento das cartas
         jogoJaIniciado = true;
@@ -533,27 +598,295 @@ public class Controlador {
                     break;
                 }
             }
+
             break;
         case 3:// move cartas do tableau1 para outros tableaus ou fundações
-            perguntaProUsuarioTableauDestino(1);
+            int pilhaDestino = perguntaProUsuarioDestino(1);
+            Stack<Carta> tableauAtual = tableau1Atual;
+            Stack<Carta> fundacaoAtual = new Stack();
+
+            System.out.println("A pilha destino foi num: " + pilhaDestino);
+
+            if (pilhaDestino > 10) {// é pra uma fundação
+                switch (pilhaDestino) {
+                case 11:// para fundação 1
+                    fundacaoAtual = fundacao1Atual;
+                    System.out.println("Entrou no case");
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 12:// para fundação 2
+                    fundacaoAtual = fundacao2Atual;
+                    System.out.println("Entrou no case");
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 13:// para fundação 3
+                    fundacaoAtual = fundacao3Atual;
+                    System.out.println("Entrou no case");
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 14:// para fundação 4
+                    fundacaoAtual = fundacao4Atual;
+                    System.out.println("Entrou no case");
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                }
+            } else if (pilhaDestino < 10) {// é pra um tableau
+                switch (pilhaDestino) {
+                case 1:// para tableau 1
+                case 2:// para tableau 2
+                case 3:// para tableau 3
+                case 4:// para tableau 4
+                case 5:// para tableau 5
+                case 6:// para tableau 6
+                case 7:// para tableau 7
+
+                }
+            }
             break;
         case 4:// move cartas do tableau2 para outros tableaus ou fundações
-            perguntaProUsuarioTableauDestino(2);
+            pilhaDestino = perguntaProUsuarioDestino(2);
+            tableauAtual = tableau2Atual;
+            System.out.println("A pilha destino foi num: " + pilhaDestino);
+
+            if (pilhaDestino > 10) {// é pra uma fundação
+                switch (pilhaDestino) {
+                case 11:// para fundação 1
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao1Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 12:// para fundação 2
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao2Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 13:// para fundação 3
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao3Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 14:// para fundação 4
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao4Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                }
+            } else if (pilhaDestino < 10) {// é pra um tableau
+                switch (pilhaDestino) {
+                case 1:// para tableau 1
+                case 2:// para tableau 2
+                case 3:// para tableau 3
+                case 4:// para tableau 4
+                case 5:// para tableau 5
+                case 6:// para tableau 6
+                case 7:// para tableau 7
+
+                }
+            }
             break;
         case 5:// move cartas do tableau3 para outros tableaus ou fundações
-            perguntaProUsuarioTableauDestino(3);
+            pilhaDestino = perguntaProUsuarioDestino(3);
+            tableauAtual = tableau3Atual;
+
+            System.out.println("A pilha destino foi num: " + pilhaDestino);
+
+            if (pilhaDestino > 10) {// é pra uma fundação
+                switch (pilhaDestino) {
+                case 11:// para fundação 1
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao1Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 12:// para fundação 2
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao2Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 13:// para fundação 3
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao3Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 14:// para fundação 4
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao4Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                }
+            } else if (pilhaDestino < 10) {// é pra um tableau
+                switch (pilhaDestino) {
+                case 1:// para tableau 1
+                case 2:// para tableau 2
+                case 3:// para tableau 3
+                case 4:// para tableau 4
+                case 5:// para tableau 5
+                case 6:// para tableau 6
+                case 7:// para tableau 7
+
+                }
+            }
             break;
         case 6:// move cartas do tableau4 para outros tableaus ou fundações
-            perguntaProUsuarioTableauDestino(4);
+            pilhaDestino = perguntaProUsuarioDestino(4);
+            tableauAtual = tableau4Atual;
+
+            System.out.println("A pilha destino foi num: " + pilhaDestino);
+
+            if (pilhaDestino > 10) {// é pra uma fundação
+                switch (pilhaDestino) {
+                case 11:// para fundação 1
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao1Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 12:// para fundação 2
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao2Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 13:// para fundação 3
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao3Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 14:// para fundação 4
+                    System.out.println("Entrou no case");
+                    fundacaoAtual = fundacao4Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                }
+            } else if (pilhaDestino < 10) {// é pra um tableau
+                switch (pilhaDestino) {
+                case 1:// para tableau 1
+                case 2:// para tableau 2
+                case 3:// para tableau 3
+                case 4:// para tableau 4
+                case 5:// para tableau 5
+                case 6:// para tableau 6
+                case 7:// para tableau 7
+
+                }
+            }
             break;
         case 7:// move cartas do tableau5 para outros tableaus ou fundações
-            perguntaProUsuarioTableauDestino(5);
+            pilhaDestino = perguntaProUsuarioDestino(5);
+            tableauAtual = tableau5Atual;
+
+            if (pilhaDestino > 10) {// é pra uma fundação
+                switch (pilhaDestino) {
+                case 11:// para fundação 1
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao1Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 12:// para fundação 2
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao2Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 13:// para fundação 3
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao3Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 14:// para fundação 4
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao4Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                }
+            } else if (pilhaDestino < 10) {// é pra um tableau
+                switch (pilhaDestino) {
+                case 1:// para tableau 1
+                case 2:// para tableau 2
+                case 3:// para tableau 3
+                case 4:// para tableau 4
+                case 5:// para tableau 5
+                case 6:// para tableau 6
+                case 7:// para tableau 7
+
+                }
+            }
             break;
         case 8:// move cartas do tableau6 para outros tableaus ou fundações
-            perguntaProUsuarioTableauDestino(6);
+            pilhaDestino = perguntaProUsuarioDestino(6);
+            tableauAtual = tableau6Atual;
+
+            if (pilhaDestino > 10) {// é pra uma fundação
+                switch (pilhaDestino) {
+                case 11:// para fundação 1
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao1Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 12:// para fundação 2
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao2Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 13:// para fundação 3
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao3Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 14:// para fundação 4
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao4Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                }
+            } else if (pilhaDestino < 10) {// é pra um tableau
+                switch (pilhaDestino) {
+                case 1:// para tableau 1
+                case 2:// para tableau 2
+                case 3:// para tableau 3
+                case 4:// para tableau 4
+                case 5:// para tableau 5
+                case 6:// para tableau 6
+                case 7:// para tableau 7
+
+                }
+            }
             break;
         case 9:// move cartas do tableau7 para outros tableaus ou fundações
-            perguntaProUsuarioTableauDestino(7);
+            pilhaDestino = perguntaProUsuarioDestino(7);
+            tableauAtual = tableau7Atual;
+
+            if (pilhaDestino > 10) {// é pra uma fundação
+                switch (pilhaDestino) {
+                case 11:// para fundação 1
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao1Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 12:// para fundação 2
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao2Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 13:// para fundação 3
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao3Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                case 14:// para fundação 4
+                    System.out.println("entrou no case");
+                    fundacaoAtual = fundacao4Atual;
+                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                    break;
+                }
+            } else if (pilhaDestino < 10) {// é pra um tableau
+                switch (pilhaDestino) {
+                case 1:// para tableau 1
+                case 2:// para tableau 2
+                case 3:// para tableau 3
+                case 4:// para tableau 4
+                case 5:// para tableau 5
+                case 6:// para tableau 6
+                case 7:// para tableau 7
+
+                }
+            }
             break;
         default:
             System.out.println("#Valor inválido");
