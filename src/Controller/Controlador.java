@@ -490,16 +490,131 @@ public class Controlador {
 
     }
 
-    public void moveDoTableauParaTableaus() {
+    public void moveDoTableauParaTableaus(Stack<Carta> tableauAtual, Stack<Carta> tableauDestino) {
+        Carta cartaDoTableauDestino = tableauDestino.peek();
+        Carta cartaDoTableauOrigem = tableauAtual.peek();
+        if (tableauDestino.empty()) {// se o tableau está vazio, add apenas um Rei ou um Ás
+            if (cartaDoTableauOrigem.getNaipe().equals("K") || cartaDoTableauOrigem.getNaipe().equals("A")) {
+                tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca na tableau.
+                System.out.println("tam. do tab. " + tableauDestino.size());
+            }
+        } else {// se há cartas no tableau, vê se a do descarte é numero ou não.
+            if (cartaDoTableauOrigem.getHierarquia().equals("K")) {// se vier um K, so add se houver um A
+                if (cartaDoTableauDestino.getHierarquia().equals("A")) {
+                    cartaDoTableauOrigem.setFace(true);
+                    tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca na tableau.
+                    System.out.println("tam. do tab. " + tableauDestino.size());
+                }
+            }
+            if (cartaDoTableauOrigem.getHierarquia().equals("Q")) {
+                if (cartaDoTableauDestino.getHierarquia().equals("K")) {// se a que está no tableau é um rei,
+                    // confere
+                    // o naipe
+                    // espadas(coração invertido) preto, paus (trevo)preto, copas(coração)vermelho e
+                    // ouros (balão)vermelho
+                    if (cartaDoTableauOrigem.getNaipe().equals("Espadas")
+                            || cartaDoTableauOrigem.getNaipe().equals("Paus")) {
+                        if (cartaDoTableauDestino.getNaipe().equals("Copas")
+                                || cartaDoTableauDestino.getNaipe().equals("Ouros")) {
+                            cartaDoTableauOrigem.setFace(true);
+                            tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca na tableau.
+                            System.out.println("tam. do tab. " + tableauDestino.size());
+                        }
+                    } else if (cartaDoTableauOrigem.getNaipe().equals("Copas")
+                            || cartaDoTableauOrigem.getNaipe().equals("Ouros")) {
+                        if (cartaDoTableauDestino.getNaipe().equals("Espadas")
+                                || cartaDoTableauDestino.getNaipe().equals("Paus")) {
+                            cartaDoTableauOrigem.setFace(true);
+                            tableauDestino.push(tableauAtual.pop());
+                            System.out.println("tam. do tab. " + tableauDestino.size());
+                        }
+                    }
 
+                }
+            } else if (cartaDoTableauOrigem.getHierarquia().equals("J")) {
+                if (cartaDoTableauDestino.getHierarquia().equals("Q")) {// se a que está no tableau é um dama,
+                    // confere o Naipe
+                    if (cartaDoTableauOrigem.getNaipe().equals("Espadas")
+                            || cartaDoTableauOrigem.getNaipe().equals("Paus")) {
+                        if (cartaDoTableauDestino.getNaipe().equals("Copas")
+                                || cartaDoTableauDestino.getNaipe().equals("Ouros")) {
+                            cartaDoTableauOrigem.setFace(true);
+                            tableauDestino.push(tableauAtual.pop());
+                            System.out.println("tam. do tab. " + tableauDestino.size());
+                        }
+                    } else if (cartaDoTableauOrigem.getNaipe().equals("Copas")
+                            || cartaDoTableauOrigem.getNaipe().equals("Ouros")) {
+                        if (cartaDoTableauDestino.getNaipe().equals("Espadas")
+                                || cartaDoTableauDestino.getNaipe().equals("Paus")) {
+                            cartaDoTableauOrigem.setFace(true);
+                            tableauDestino.push(tableauAtual.pop());
+                            System.out.println("tam. do tab. " + tableauDestino.size());
+                        }
+                    }
+                }
+
+            } else if (cartaDoTableauDestino.getHierarquia().equals("J")) {// se a tableau destino é J, vê se a do
+                                                                           // tableau origem é
+                                                                           // 10
+                int numCartaDeDescarte = Integer.parseInt(cartaDoTableauOrigem.getNumero());
+                if (numCartaDeDescarte == 10) {// se a carta do tab. de origem é 10, confere os naipes.
+                    if (cartaDoTableauOrigem.getNaipe().equals("Espadas")
+                            || cartaDoTableauOrigem.getNaipe().equals("Paus")) {
+                        if (cartaDoTableauDestino.getNaipe().equals("Copas")
+                                || cartaDoTableauDestino.getNaipe().equals("Ouros")) {
+                            cartaDoTableauOrigem.setFace(true);
+                            tableauDestino.push(tableauAtual.pop());
+                            System.out.println("tam. do tab. " + tableauDestino.size());
+                        }
+                    } else if (cartaDoTableauOrigem.getNaipe().equals("Copas")
+                            || cartaDoTableauOrigem.getNaipe().equals("Ouros")) {
+                        if (cartaDoTableauDestino.getNaipe().equals("Espadas")
+                                || cartaDoTableauDestino.getNaipe().equals("Paus")) {
+                            cartaDoTableauOrigem.setFace(true);
+                            tableauDestino.push(tableauAtual.pop());
+                            System.out.println("tam. do tab. " + tableauDestino.size());
+                        }
+                    }
+                }
+
+            }
+
+            else {// se forem ambas cartas de número.
+                int numCartaDeDescarte = Integer.parseInt(cartaDoTableauOrigem.getNumero());
+                int numCartaDeTableau = Integer.parseInt(cartaDoTableauDestino.getNumero());
+                System.out.println("Nums. das cartas desc tab: " + numCartaDeDescarte + " " + numCartaDeTableau);
+                if (cartaDoTableauOrigem.getNaipe().equals("Espadas")
+                        || cartaDoTableauOrigem.getNaipe().equals("Paus")) {// se a carta do tab. de origem não é 10,
+                                                                            // confere o naipe.
+                    if (cartaDoTableauDestino.getNaipe().equals("Copas")
+                            || cartaDoTableauDestino.getNaipe().equals("Ouros")) {
+                        if (numCartaDeDescarte == (numCartaDeTableau - 1)) {
+                            cartaDoTableauOrigem.setFace(true);
+                            tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca no tableau
+                            System.out.println("tam. do tab. " + tableauDestino.size());
+                        }
+                    }
+                } else if (cartaDoTableauOrigem.getNaipe().equals("Copas")
+                        || cartaDoTableauOrigem.getNaipe().equals("Ouros")) {
+                    if (cartaDoTableauDestino.getNaipe().equals("Espadas")
+                            || cartaDoTableauDestino.getNaipe().equals("Paus")) {
+                        if (numCartaDeDescarte == (numCartaDeTableau - 1)) {
+                            cartaDoTableauOrigem.setFace(true);
+                            tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca no tableau
+                            System.out.println("tam. do tab. " + tableauDestino.size());
+                        }
+                    }
+                }
+
+            }
+        }
     }
 
-
-    //IMPLEMENTAR FUNÇÃO P VIRAR CARTA SE ALGUMA FOR RETIRADA E A DE BAIXO ESTIVER VIRADA P BAIXO
-    public void viraCartaDoTabSeForPrimeira(){
+    // IMPLEMENTAR FUNÇÃO P VIRAR CARTA SE ALGUMA FOR RETIRADA E A DE BAIXO ESTIVER
+    // VIRADA P BAIXO
+    public void viraCartaDoTabSeForPrimeira() {
 
     }
-
 
     public void moverCarta() {// comporta toda a lógica do movimento das cartas
         jogoJaIniciado = true;
@@ -633,13 +748,26 @@ public class Controlador {
             } else if (pilhaDestino < 10) {// é pra um tableau
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
+                    break;
                 case 2:// para tableau 2
+                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                    break;
                 case 3:// para tableau 3
+                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                    break;
                 case 4:// para tableau 4
+                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                    break;
                 case 5:// para tableau 5
+                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                    break;
                 case 6:// para tableau 6
+                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                    break;
                 case 7:// para tableau 7
-
+                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                    break;
                 }
             }
             break;
@@ -674,13 +802,26 @@ public class Controlador {
             } else if (pilhaDestino < 10) {// é pra um tableau
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
+                    break;
                 case 2:// para tableau 2
+                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                    break;
                 case 3:// para tableau 3
+                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                    break;
                 case 4:// para tableau 4
+                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                    break;
                 case 5:// para tableau 5
+                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                    break;
                 case 6:// para tableau 6
+                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                    break;
                 case 7:// para tableau 7
-
+                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                    break;
                 }
             }
             break;
@@ -716,13 +857,26 @@ public class Controlador {
             } else if (pilhaDestino < 10) {// é pra um tableau
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
+                    break;
                 case 2:// para tableau 2
+                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                    break;
                 case 3:// para tableau 3
+                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                    break;
                 case 4:// para tableau 4
+                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                    break;
                 case 5:// para tableau 5
+                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                    break;
                 case 6:// para tableau 6
+                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                    break;
                 case 7:// para tableau 7
-
+                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                    break;
                 }
             }
             break;
@@ -758,13 +912,26 @@ public class Controlador {
             } else if (pilhaDestino < 10) {// é pra um tableau
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
+                    break;
                 case 2:// para tableau 2
+                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                    break;
                 case 3:// para tableau 3
+                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                    break;
                 case 4:// para tableau 4
+                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                    break;
                 case 5:// para tableau 5
+                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                    break;
                 case 6:// para tableau 6
+                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                    break;
                 case 7:// para tableau 7
-
+                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                    break;
                 }
             }
             break;
@@ -798,13 +965,26 @@ public class Controlador {
             } else if (pilhaDestino < 10) {// é pra um tableau
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
+                    break;
                 case 2:// para tableau 2
+                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                    break;
                 case 3:// para tableau 3
+                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                    break;
                 case 4:// para tableau 4
+                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                    break;
                 case 5:// para tableau 5
+                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                    break;
                 case 6:// para tableau 6
+                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                    break;
                 case 7:// para tableau 7
-
+                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                    break;
                 }
             }
             break;
@@ -838,13 +1018,26 @@ public class Controlador {
             } else if (pilhaDestino < 10) {// é pra um tableau
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
+                    break;
                 case 2:// para tableau 2
+                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                    break;
                 case 3:// para tableau 3
+                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                    break;
                 case 4:// para tableau 4
+                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                    break;
                 case 5:// para tableau 5
+                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                    break;
                 case 6:// para tableau 6
+                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                    break;
                 case 7:// para tableau 7
-
+                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                    break;
                 }
             }
             break;
@@ -878,13 +1071,26 @@ public class Controlador {
             } else if (pilhaDestino < 10) {// é pra um tableau
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
+                    break;
                 case 2:// para tableau 2
+                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                    break;
                 case 3:// para tableau 3
+                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                    break;
                 case 4:// para tableau 4
+                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                    break;
                 case 5:// para tableau 5
+                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                    break;
                 case 6:// para tableau 6
+                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                    break;
                 case 7:// para tableau 7
-
+                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                    break;
                 }
             }
             break;
