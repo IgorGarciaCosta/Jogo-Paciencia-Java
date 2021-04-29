@@ -63,6 +63,8 @@ public class Controlador {
         tableau6Atual = b.getStack("tableau6");
         tableau7Atual = b.getStack("tableau7");
 
+        System.out.println("\n\n----------------------------------------------------\n\n");
+
         System.out.printf("1 - ESTOQUE == ");
         for (int i = 0; i < estoqueAtual.size(); i++) {
             System.out.printf(" [<>], ");
@@ -240,19 +242,19 @@ public class Controlador {
         jogoJaIniciado = b;
     }
 
-    public void moveDoDescarteParaTableaus(Carta cartaDoTableau, Carta cartaDoDescarte, Stack<Carta> tableauAtual) {
-        System.out.println("Carta do desc.: " + cartaDoDescarte.getHierarquia() + cartaDoDescarte.getNumero()
-                + cartaDoDescarte.getNaipe());
-        System.out.println("Carta do Tab.: " + cartaDoTableau.getHierarquia() + cartaDoTableau.getNumero()
-                + cartaDoTableau.getNaipe());
+    public void moveDoDescarteParaTableaus(Carta cartaDoDescarte, Stack<Carta> tableauAtual) {
+        Carta cartaDoTableau = new Carta();
 
-        cartaDoTableau = tableauAtual.peek();
         if (tableauAtual.empty()) {// se o tableau está vazio, add apenas um Rei ou um Ás
-            if (cartaDoDescarte.getNaipe().equals("K") || cartaDoDescarte.getNaipe().equals("A")) {
+            System.out.println("ta vazio msm");
+            System.out.println("carta do desc: "+cartaDoDescarte.getNaipe()+cartaDoDescarte.getHierarquia());
+            if (cartaDoDescarte.getHierarquia().equals("K")) {
+                System.out.println("entrou");
                 tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
                 System.out.println("tam. do tab. " + tableauAtual.size());
             }
         } else {// se há cartas no tableau, vê se a do descarte é numero ou não.
+            cartaDoTableau = tableauAtual.peek();
             if (cartaDoDescarte.getHierarquia().equals("K")) {// se vier um K, so add se houver um A
                 if (cartaDoTableau.getHierarquia().equals("A")) {
                     cartaDoDescarte.setFace(true);
@@ -501,9 +503,21 @@ public class Controlador {
 
     }
 
+    public void confereSeUmDosTableausEstaVazio(Stack<Carta> tableauAtual, Stack<Carta> tableauDestino) {
+        if (tableauAtual.empty()) {
+            System.out.println("#Tableau de origem vazio, por favor, escolha outro de onde mandar uma carta.");
+            moverCarta();
+        }
+    }
+
     public void moveDoTableauParaTableaus(Stack<Carta> tableauAtual, Stack<Carta> tableauDestino) {
-        Carta cartaDoTableauDestino = tableauDestino.peek();
-        Carta cartaDoTableauOrigem = tableauAtual.peek();
+        Carta cartaDoTableauDestino = new Carta();
+        Carta cartaDoTableauOrigem = new Carta();
+        if (!tableauDestino.empty())
+            cartaDoTableauDestino = tableauDestino.peek();
+        if (!tableauAtual.empty())
+            cartaDoTableauOrigem = tableauAtual.peek();
+
         if (tableauDestino.empty()) {// se o tableau está vazio, add apenas um Rei ou um Ás
             if (cartaDoTableauOrigem.getNaipe().equals("K") || cartaDoTableauOrigem.getNaipe().equals("A")) {
                 tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca na tableau.
@@ -648,7 +662,7 @@ public class Controlador {
         int selecao = 0;
 
         System.out.println(
-                "\nDIGITE DE QUAL PILHA MOVER CARTA:\n\n1 - ESTOQUE\n2 - DESCARTE\n3 - TABLEAU1\n4 - TABLEAU2\n5 - TABLEAU3\n6 - TABLEAU4\n7 - TABLEAU5\n8 - TABLEAU6\n9 - TABLEAU7");
+                "\nDIGITE DE QUAL PILHA MOVER CARTA:\n\n1 - ESTOQUE\n2 - DESCARTE\n3 - TABLEAU1\n4 - TABLEAU2\n5 - TABLEAU3\n6 - TABLEAU4\n7 - TABLEAU5\n8 - TABLEAU6\n9 - TABLEAU7\n10-VOLTAR");
         System.out.printf("\nOpção escolhida: ");
 
         try {
@@ -705,32 +719,26 @@ public class Controlador {
                     moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao4Atual);
                     break;
                 case 5:// tableau1
-                    Carta cartaDoTableau = tableau1Atual.peek();
-                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau1Atual);
+
+                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau1Atual);
                     break;
                 case 6:// tableau2
-                    cartaDoTableau = tableau2Atual.peek();
-                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau2Atual);
+                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau2Atual);
                     break;
                 case 7:// tableau3
-                    cartaDoTableau = tableau3Atual.peek();
-                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau3Atual);
+                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau3Atual);
                     break;
                 case 8:// tableau4
-                    cartaDoTableau = tableau4Atual.peek();
-                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau4Atual);
+                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau4Atual);
                     break;
                 case 9:// tableau5
-                    cartaDoTableau = tableau5Atual.peek();
-                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau5Atual);
+                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau5Atual);
                     break;
                 case 10:// tableau6
-                    cartaDoTableau = tableau6Atual.peek();
-                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau6Atual);
+                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau6Atual);
                     break;
                 case 11:// tableau7
-                    cartaDoTableau = tableau7Atual.peek();
-                    moveDoDescarteParaTableaus(cartaDoTableau, cartaDoDescarte, tableau7Atual);
+                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau7Atual);
                     break;
                 default:
                     System.out.println("valor do selecaoFund: " + selecaoFund);
@@ -772,26 +780,34 @@ public class Controlador {
                     break;
                 }
             } else if (pilhaDestino < 10) {// é pra um tableau
+
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
                     break;
                 case 2:// para tableau 2
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
                     break;
                 case 3:// para tableau 3
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
                     break;
                 case 4:// para tableau 4
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
                     break;
                 case 5:// para tableau 5
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
                     break;
                 case 6:// para tableau 6
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
                     break;
                 case 7:// para tableau 7
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
                     break;
                 }
@@ -826,26 +842,34 @@ public class Controlador {
                     break;
                 }
             } else if (pilhaDestino < 10) {// é pra um tableau
+
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
                     break;
                 case 2:// para tableau 2
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
                     break;
                 case 3:// para tableau 3
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
                     break;
                 case 4:// para tableau 4
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
                     break;
                 case 5:// para tableau 5
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
                     break;
                 case 6:// para tableau 6
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
                     break;
                 case 7:// para tableau 7
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
                     break;
                 }
@@ -881,26 +905,34 @@ public class Controlador {
                     break;
                 }
             } else if (pilhaDestino < 10) {// é pra um tableau
+
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
                     break;
                 case 2:// para tableau 2
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
                     break;
                 case 3:// para tableau 3
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
                     break;
                 case 4:// para tableau 4
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
                     break;
                 case 5:// para tableau 5
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
                     break;
                 case 6:// para tableau 6
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
                     break;
                 case 7:// para tableau 7
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
                     break;
                 }
@@ -936,26 +968,34 @@ public class Controlador {
                     break;
                 }
             } else if (pilhaDestino < 10) {// é pra um tableau
+
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
                     break;
                 case 2:// para tableau 2
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
                     break;
                 case 3:// para tableau 3
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
                     break;
                 case 4:// para tableau 4
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
                     break;
                 case 5:// para tableau 5
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
                     break;
                 case 6:// para tableau 6
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
                     break;
                 case 7:// para tableau 7
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
                     break;
                 }
@@ -989,26 +1029,34 @@ public class Controlador {
                     break;
                 }
             } else if (pilhaDestino < 10) {// é pra um tableau
+
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
                     break;
                 case 2:// para tableau 2
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
                     break;
                 case 3:// para tableau 3
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
                     break;
                 case 4:// para tableau 4
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
                     break;
                 case 5:// para tableau 5
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
                     break;
                 case 6:// para tableau 6
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
                     break;
                 case 7:// para tableau 7
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
                     break;
                 }
@@ -1042,26 +1090,34 @@ public class Controlador {
                     break;
                 }
             } else if (pilhaDestino < 10) {// é pra um tableau
+
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
                     break;
                 case 2:// para tableau 2
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
                     break;
                 case 3:// para tableau 3
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
                     break;
                 case 4:// para tableau 4
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
                     break;
                 case 5:// para tableau 5
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
                     break;
                 case 6:// para tableau 6
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
                     break;
                 case 7:// para tableau 7
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
                     break;
                 }
@@ -1095,30 +1151,41 @@ public class Controlador {
                     break;
                 }
             } else if (pilhaDestino < 10) {// é pra um tableau
+
                 switch (pilhaDestino) {
                 case 1:// para tableau 1
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
                     break;
                 case 2:// para tableau 2
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
                     break;
                 case 3:// para tableau 3
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
                     break;
                 case 4:// para tableau 4
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
                     break;
                 case 5:// para tableau 5
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
                     break;
                 case 6:// para tableau 6
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
                     break;
                 case 7:// para tableau 7
+                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
                     moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
                     break;
                 }
             }
+            break;
+        case 10:
+            exibeJogo();
             break;
         default:
             System.out.println("#Valor inválido");
