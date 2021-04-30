@@ -247,7 +247,7 @@ public class Controlador {
 
         if (tableauAtual.empty()) {// se o tableau está vazio, add apenas um Rei ou um Ás
             System.out.println("ta vazio msm");
-            System.out.println("carta do desc: "+cartaDoDescarte.getNaipe()+cartaDoDescarte.getHierarquia());
+            System.out.println("carta do desc: " + cartaDoDescarte.getNaipe() + cartaDoDescarte.getHierarquia());
             if (cartaDoDescarte.getHierarquia().equals("K")) {
                 System.out.println("entrou");
                 tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
@@ -379,42 +379,42 @@ public class Controlador {
         }
 
         switch (selecao) {
-        case 1:
-            return 11;
-        case 2:
-            return 12;
-        case 3:
-            return 13;
-        case 4:
-            return 14;
-        case 5:
-            numtableauSelecionado = 1;
-            System.out.println("num do tab dest: " + numtableauSelecionado);
-            return 1;
-        case 6:
-            numtableauSelecionado = 2;
-            System.out.println("num do tab dest: " + numtableauSelecionado);
-            return 2;
-        case 7:
-            numtableauSelecionado = 3;
-            System.out.println("num do tab dest: " + numtableauSelecionado);
-            return 3;
-        case 8:
-            numtableauSelecionado = 4;
-            System.out.println("num do tab dest: " + numtableauSelecionado);
-            return 4;
-        case 9:
-            numtableauSelecionado = 5;
-            System.out.println("num do tab dest: " + numtableauSelecionado);
-            return 5;
-        case 10:
-            numtableauSelecionado = 6;
-            System.out.println("num do tab dest: " + numtableauSelecionado);
-            return 6;
-        case 11:
-            numtableauSelecionado = 7;
-            System.out.println("num do tab dest: " + numtableauSelecionado);
-            return 7;
+            case 1:
+                return 11;
+            case 2:
+                return 12;
+            case 3:
+                return 13;
+            case 4:
+                return 14;
+            case 5:
+                numtableauSelecionado = 1;
+                System.out.println("num do tab dest: " + numtableauSelecionado);
+                return 1;
+            case 6:
+                numtableauSelecionado = 2;
+                System.out.println("num do tab dest: " + numtableauSelecionado);
+                return 2;
+            case 7:
+                numtableauSelecionado = 3;
+                System.out.println("num do tab dest: " + numtableauSelecionado);
+                return 3;
+            case 8:
+                numtableauSelecionado = 4;
+                System.out.println("num do tab dest: " + numtableauSelecionado);
+                return 4;
+            case 9:
+                numtableauSelecionado = 5;
+                System.out.println("num do tab dest: " + numtableauSelecionado);
+                return 5;
+            case 10:
+                numtableauSelecionado = 6;
+                System.out.println("num do tab dest: " + numtableauSelecionado);
+                return 6;
+            case 11:
+                numtableauSelecionado = 7;
+                System.out.println("num do tab dest: " + numtableauSelecionado);
+                return 7;
 
         }
 
@@ -656,13 +656,98 @@ public class Controlador {
 
     }
 
+    public Stack<Carta> perguntaETiraCartas(Stack<Carta> tableauEscolhido) {// Pergunta quantas cartas serão tiradas do
+        // tableau recebido
+        Scanner resp = new Scanner(System.in);
+        Stack<Carta> cartasRetiradas = new Stack<Carta>();
+        int selecao = 0;
+
+        System.out.printf("\nDIGITE QUANTAS CARTAS QUER RETIRAR DESTE TABLEAU: ");
+
+        try {
+            selecao = resp.nextInt();
+        }
+
+        catch (InputMismatchException e) {
+            System.out.println("#Valor inválido. Digite números.\n");
+            moverCarta();
+        }
+
+        if (tableauEscolhido.empty()) {
+            System.out.println("#O tableau de origem escolhido está vazio, por favor, escolha outro.");
+            moverCarta();
+        }
+
+        else if (selecao <= tableauEscolhido.size()) {
+
+            Carta cartaAuxiliar = new Carta();
+            for (int i = 0; i < selecao; i++) {// preenche a pilha auxiliar
+                cartaAuxiliar = tableauEscolhido.peek();
+                if (cartaAuxiliar.getFace()) {// carta virada pra cima
+                    cartasRetiradas.push(tableauEscolhido.pop());// passa cartas selecionadas pra pilha auxiliar
+                } else if (!cartaAuxiliar.getFace()) {// carta virada pra baixo
+                    System.out
+                            .println("#Você selecionou uma carta virada para baixo. Por gentileza, escolha novamente.");
+                    moverCarta();
+                }
+
+            }
+
+            return cartasRetiradas;
+
+        }
+
+        else {
+            System.out.println("#Você selecionou mais casrtas do que há no tableau. Por favor, escolha novamente.");
+            moverCarta();
+        }
+
+        return cartasRetiradas;
+
+    }
+
+    public void perguntaDeQualTableau() {
+        Scanner resp = new Scanner(System.in);
+        int selecao = 0;
+
+        System.out.println(
+                "\nDIGITE DE QUAL PILHA MOVER CARTA:\n\n1 - TABLEAU1\n2 - TABLEAU2\n3 - TABLEAU3\n4 - TABLEAU4\n5 - TABLEAU5\n6 - TABLEAU6\n7 - TABLEAU7");
+        System.out.printf("\nOpção escolhida: ");
+
+        try {
+            selecao = resp.nextInt();
+        }
+
+        catch (InputMismatchException e) {
+            System.out.println("#Valor inválido. Digite números.\n");
+            moverCarta();
+        }
+
+        switch (selecao) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+        }
+    }
+
     public void moverCarta() {// comporta toda a lógica do movimento das cartas
         jogoJaIniciado = true;
         Scanner resp = new Scanner(System.in);
         int selecao = 0;
 
         System.out.println(
-                "\nDIGITE DE QUAL PILHA MOVER CARTA:\n\n1 - ESTOQUE\n2 - DESCARTE\n3 - TABLEAU1\n4 - TABLEAU2\n5 - TABLEAU3\n6 - TABLEAU4\n7 - TABLEAU5\n8 - TABLEAU6\n9 - TABLEAU7\n10-VOLTAR");
+                "\nDIGITE DE QUAL PILHA MOVER CARTA:\n\n1 - ESTOQUE\n2 - DESCARTE\n3 - TABLEAU1\n4 - TABLEAU2\n5 - TABLEAU3\n6 - TABLEAU4\n7 - TABLEAU5\n8 - TABLEAU6\n9 - TABLEAU7\n10 - MOVER MÚLTIPLAS CARTAS DE UM TABLEAU\n11 - VOLTAR");
         System.out.printf("\nOpção escolhida: ");
 
         try {
@@ -675,27 +760,530 @@ public class Controlador {
         }
 
         switch (selecao) {// seleciona de qual pilha movera uma carta
-        case 1:// move carta do estoque para o descarte
-            if (estoqueAtual.empty())
-                System.out.println("\nO estoque está vazio. :/");
-            else {
-                for (int i = 0; i < numDeCartasDoEstoque; i++) {
-                    descarteAtual.push(estoqueAtual.pop());
+            case 1:// move carta do estoque para o descarte
+                if (estoqueAtual.empty())
+                    System.out.println("\nO estoque está vazio. :/");
+                else {
+                    for (int i = 0; i < numDeCartasDoEstoque; i++) {
+                        descarteAtual.push(estoqueAtual.pop());
+                    }
                 }
-            }
-            break;
-        case 2:// move carta do descarte para tableaus ou fundações.
-            if (descarteAtual.empty())
-                System.out.println("\nA pilha de descarte está vazia. :/");
-            else {
-                Scanner respFund1 = new Scanner(System.in);
-                int selecaoFund = 0;
+                break;
+            case 2:// move carta do descarte para tableaus ou fundações.
+                if (descarteAtual.empty())
+                    System.out.println("\nA pilha de descarte está vazia. :/");
+                else {
+                    Scanner respFund1 = new Scanner(System.in);
+                    int selecaoFund = 0;
+                    System.out.println(
+                            "\nDIGITE PARA QUAL PILHA MOVER CARTA:\n\n1 - FUNDACAO1\n2 - FUNDACAO2\n3 - FUNDACAO3\n4 - FUNDACAO4\n5 - TABLEAU1\n6 - TABLEAU2\n7 - TABLEAU3\n8 - TABLEAU4\n9 - TABLEAU5\n10 - TABLEAU6\n11 - TABLEAU7");
+                    System.out.printf("\nOpção escolhida: ");
+
+                    try {
+                        selecaoFund = respFund1.nextInt();
+                    }
+
+                    catch (InputMismatchException e) {
+                        System.out.println("#Valor inválido. Digite números.\n");
+                        moverCarta();
+                    }
+
+                    Carta cartaDoDescarte = descarteAtual.peek();// olha a primeira carta do descarte
+
+                    switch (selecaoFund) {
+                        case 1:// fundação1
+                            moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao1Atual);
+                            break;
+                        case 2:// fundação2
+                            moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao2Atual);
+                            break;
+                        case 3:// fundação3
+                            moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao3Atual);
+                            break;
+                        case 4:// fundação4
+                            moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao4Atual);
+                            break;
+                        case 5:// tableau1
+
+                            moveDoDescarteParaTableaus(cartaDoDescarte, tableau1Atual);
+                            break;
+                        case 6:// tableau2
+                            moveDoDescarteParaTableaus(cartaDoDescarte, tableau2Atual);
+                            break;
+                        case 7:// tableau3
+                            moveDoDescarteParaTableaus(cartaDoDescarte, tableau3Atual);
+                            break;
+                        case 8:// tableau4
+                            moveDoDescarteParaTableaus(cartaDoDescarte, tableau4Atual);
+                            break;
+                        case 9:// tableau5
+                            moveDoDescarteParaTableaus(cartaDoDescarte, tableau5Atual);
+                            break;
+                        case 10:// tableau6
+                            moveDoDescarteParaTableaus(cartaDoDescarte, tableau6Atual);
+                            break;
+                        case 11:// tableau7
+                            moveDoDescarteParaTableaus(cartaDoDescarte, tableau7Atual);
+                            break;
+                        default:
+                            System.out.println("valor do selecaoFund: " + selecaoFund);
+                            System.out.println("#Valor inválido");
+                            moverCarta();
+                            break;
+                    }
+                }
+
+                break;
+            case 3:// move cartas do tableau1 para outros tableaus ou fundações
+                int pilhaDestino = perguntaProUsuarioDestino(1);
+                Stack<Carta> tableauAtual = tableau1Atual;
+                Stack<Carta> fundacaoAtual = new Stack();
+
+                System.out.println("A pilha destino foi num: " + pilhaDestino);
+
+                if (pilhaDestino > 10) {// é pra uma fundação
+                    switch (pilhaDestino) {
+                        case 11:// para fundação 1
+                            fundacaoAtual = fundacao1Atual;
+                            System.out.println("Entrou no case");
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 12:// para fundação 2
+                            fundacaoAtual = fundacao2Atual;
+                            System.out.println("Entrou no case");
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 13:// para fundação 3
+                            fundacaoAtual = fundacao3Atual;
+                            System.out.println("Entrou no case");
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 14:// para fundação 4
+                            fundacaoAtual = fundacao4Atual;
+                            System.out.println("Entrou no case");
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                    }
+                } else if (pilhaDestino < 10) {// é pra um tableau
+
+                    switch (pilhaDestino) {
+                        case 1:// para tableau 1
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de
+                                                                                   // destino
+                            break;
+                        case 2:// para tableau 2
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                            break;
+                        case 3:// para tableau 3
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                            break;
+                        case 4:// para tableau 4
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                            break;
+                        case 5:// para tableau 5
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                            break;
+                        case 6:// para tableau 6
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                            break;
+                        case 7:// para tableau 7
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                            break;
+                    }
+                }
+                break;
+            case 4:// move cartas do tableau2 para outros tableaus ou fundações
+                pilhaDestino = perguntaProUsuarioDestino(2);
+                tableauAtual = tableau2Atual;
+                System.out.println("A pilha destino foi num: " + pilhaDestino);
+
+                if (pilhaDestino > 10) {// é pra uma fundação
+                    switch (pilhaDestino) {
+                        case 11:// para fundação 1
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao1Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 12:// para fundação 2
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao2Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 13:// para fundação 3
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao3Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 14:// para fundação 4
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao4Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                    }
+                } else if (pilhaDestino < 10) {// é pra um tableau
+
+                    switch (pilhaDestino) {
+                        case 1:// para tableau 1
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de
+                                                                                   // destino
+                            break;
+                        case 2:// para tableau 2
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                            break;
+                        case 3:// para tableau 3
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                            break;
+                        case 4:// para tableau 4
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                            break;
+                        case 5:// para tableau 5
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                            break;
+                        case 6:// para tableau 6
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                            break;
+                        case 7:// para tableau 7
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                            break;
+                    }
+                }
+                break;
+            case 5:// move cartas do tableau3 para outros tableaus ou fundações
+                pilhaDestino = perguntaProUsuarioDestino(3);
+                tableauAtual = tableau3Atual;
+
+                System.out.println("A pilha destino foi num: " + pilhaDestino);
+
+                if (pilhaDestino > 10) {// é pra uma fundação
+                    switch (pilhaDestino) {
+                        case 11:// para fundação 1
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao1Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 12:// para fundação 2
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao2Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 13:// para fundação 3
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao3Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 14:// para fundação 4
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao4Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                    }
+                } else if (pilhaDestino < 10) {// é pra um tableau
+
+                    switch (pilhaDestino) {
+                        case 1:// para tableau 1
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de
+                                                                                   // destino
+                            break;
+                        case 2:// para tableau 2
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                            break;
+                        case 3:// para tableau 3
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                            break;
+                        case 4:// para tableau 4
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                            break;
+                        case 5:// para tableau 5
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                            break;
+                        case 6:// para tableau 6
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                            break;
+                        case 7:// para tableau 7
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                            break;
+                    }
+                }
+                break;
+            case 6:// move cartas do tableau4 para outros tableaus ou fundações
+                pilhaDestino = perguntaProUsuarioDestino(4);
+                tableauAtual = tableau4Atual;
+
+                System.out.println("A pilha destino foi num: " + pilhaDestino);
+
+                if (pilhaDestino > 10) {// é pra uma fundação
+                    switch (pilhaDestino) {
+                        case 11:// para fundação 1
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao1Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 12:// para fundação 2
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao2Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 13:// para fundação 3
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao3Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 14:// para fundação 4
+                            System.out.println("Entrou no case");
+                            fundacaoAtual = fundacao4Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                    }
+                } else if (pilhaDestino < 10) {// é pra um tableau
+
+                    switch (pilhaDestino) {
+                        case 1:// para tableau 1
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de
+                                                                                   // destino
+                            break;
+                        case 2:// para tableau 2
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                            break;
+                        case 3:// para tableau 3
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                            break;
+                        case 4:// para tableau 4
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                            break;
+                        case 5:// para tableau 5
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                            break;
+                        case 6:// para tableau 6
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                            break;
+                        case 7:// para tableau 7
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                            break;
+                    }
+                }
+                break;
+            case 7:// move cartas do tableau5 para outros tableaus ou fundações
+                pilhaDestino = perguntaProUsuarioDestino(5);
+                tableauAtual = tableau5Atual;
+
+                if (pilhaDestino > 10) {// é pra uma fundação
+                    switch (pilhaDestino) {
+                        case 11:// para fundação 1
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao1Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 12:// para fundação 2
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao2Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 13:// para fundação 3
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao3Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 14:// para fundação 4
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao4Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                    }
+                } else if (pilhaDestino < 10) {// é pra um tableau
+
+                    switch (pilhaDestino) {
+                        case 1:// para tableau 1
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de
+                                                                                   // destino
+                            break;
+                        case 2:// para tableau 2
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                            break;
+                        case 3:// para tableau 3
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                            break;
+                        case 4:// para tableau 4
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                            break;
+                        case 5:// para tableau 5
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                            break;
+                        case 6:// para tableau 6
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                            break;
+                        case 7:// para tableau 7
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                            break;
+                    }
+                }
+                break;
+            case 8:// move cartas do tableau6 para outros tableaus ou fundações
+                pilhaDestino = perguntaProUsuarioDestino(6);
+                tableauAtual = tableau6Atual;
+
+                if (pilhaDestino > 10) {// é pra uma fundação
+                    switch (pilhaDestino) {
+                        case 11:// para fundação 1
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao1Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 12:// para fundação 2
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao2Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 13:// para fundação 3
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao3Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 14:// para fundação 4
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao4Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                    }
+                } else if (pilhaDestino < 10) {// é pra um tableau
+
+                    switch (pilhaDestino) {
+                        case 1:// para tableau 1
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de
+                                                                                   // destino
+                            break;
+                        case 2:// para tableau 2
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                            break;
+                        case 3:// para tableau 3
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                            break;
+                        case 4:// para tableau 4
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                            break;
+                        case 5:// para tableau 5
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                            break;
+                        case 6:// para tableau 6
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                            break;
+                        case 7:// para tableau 7
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                            break;
+                    }
+                }
+                break;
+            case 9:// move cartas do tableau7 para outros tableaus ou fundações
+                pilhaDestino = perguntaProUsuarioDestino(7);
+                tableauAtual = tableau7Atual;
+
+                if (pilhaDestino > 10) {// é pra uma fundação
+                    switch (pilhaDestino) {
+                        case 11:// para fundação 1
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao1Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 12:// para fundação 2
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao2Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 13:// para fundação 3
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao3Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                        case 14:// para fundação 4
+                            System.out.println("entrou no case");
+                            fundacaoAtual = fundacao4Atual;
+                            moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
+                            break;
+                    }
+                } else if (pilhaDestino < 10) {// é pra um tableau
+
+                    switch (pilhaDestino) {
+                        case 1:// para tableau 1
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de
+                                                                                   // destino
+                            break;
+                        case 2:// para tableau 2
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
+                            break;
+                        case 3:// para tableau 3
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
+                            break;
+                        case 4:// para tableau 4
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
+                            break;
+                        case 5:// para tableau 5
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
+                            break;
+                        case 6:// para tableau 6
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
+                            break;
+                        case 7:// para tableau 7
+                            confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
+                            moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
+                            break;
+                    }
+                }
+                break;
+
+            case 10:
                 System.out.println(
-                        "\nDIGITE PARA QUAL PILHA MOVER CARTA:\n\n1 - FUNDACAO1\n2 - FUNDACAO2\n3 - FUNDACAO3\n4 - FUNDACAO4\n5 - TABLEAU1\n6 - TABLEAU2\n7 - TABLEAU3\n8 - TABLEAU4\n9 - TABLEAU5\n10 - TABLEAU6\n11 - TABLEAU7");
+                        "\nDIGITE DE QUAL TABLEAU MOVER CARTA:\n\n1 - TABLEAU1\n2 - TABLEAU2\n3 - TABLEAU3\n4 - TABLEAU4\n5 - TABLEAU5\n6 - TABLEAU6\n7 - TABLEAU7\n8 - VOLTAR");
                 System.out.printf("\nOpção escolhida: ");
 
                 try {
-                    selecaoFund = respFund1.nextInt();
+                    selecao = resp.nextInt();
                 }
 
                 catch (InputMismatchException e) {
@@ -703,493 +1291,42 @@ public class Controlador {
                     moverCarta();
                 }
 
-                Carta cartaDoDescarte = descarteAtual.peek();// olha a primeira carta do descarte
-
-                switch (selecaoFund) {
-                case 1:// fundação1
-                    moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao1Atual);
-                    break;
-                case 2:// fundação2
-                    moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao2Atual);
-                    break;
-                case 3:// fundação3
-                    moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao3Atual);
-                    break;
-                case 4:// fundação4
-                    moveDoDescarteParaFundacoes(cartaDoDescarte, fundacao4Atual);
-                    break;
-                case 5:// tableau1
-
-                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau1Atual);
-                    break;
-                case 6:// tableau2
-                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau2Atual);
-                    break;
-                case 7:// tableau3
-                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau3Atual);
-                    break;
-                case 8:// tableau4
-                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau4Atual);
-                    break;
-                case 9:// tableau5
-                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau5Atual);
-                    break;
-                case 10:// tableau6
-                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau6Atual);
-                    break;
-                case 11:// tableau7
-                    moveDoDescarteParaTableaus(cartaDoDescarte, tableau7Atual);
-                    break;
-                default:
-                    System.out.println("valor do selecaoFund: " + selecaoFund);
-                    System.out.println("#Valor inválido");
-                    moverCarta();
-                    break;
+                switch (selecao) {
+                    case 1:
+                        perguntaETiraCartas(tableau1Atual);
+                        break;
+                    case 2:
+                        perguntaETiraCartas(tableau2Atual);
+                        break;
+                    case 3:
+                        perguntaETiraCartas(tableau3Atual);
+                        break;
+                    case 4:
+                        perguntaETiraCartas(tableau4Atual);
+                        break;
+                    case 5:
+                        perguntaETiraCartas(tableau5Atual);
+                        break;
+                    case 6:
+                        perguntaETiraCartas(tableau6Atual);
+                        break;
+                    case 7:
+                        perguntaETiraCartas(tableau7Atual);
+                        break;
+                    case 8:
+                        moverCarta();    
+                    default:
+                        System.out.println("#Valor inválido");
+                        moverCarta();
                 }
-            }
 
-            break;
-        case 3:// move cartas do tableau1 para outros tableaus ou fundações
-            int pilhaDestino = perguntaProUsuarioDestino(1);
-            Stack<Carta> tableauAtual = tableau1Atual;
-            Stack<Carta> fundacaoAtual = new Stack();
-
-            System.out.println("A pilha destino foi num: " + pilhaDestino);
-
-            if (pilhaDestino > 10) {// é pra uma fundação
-                switch (pilhaDestino) {
-                case 11:// para fundação 1
-                    fundacaoAtual = fundacao1Atual;
-                    System.out.println("Entrou no case");
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 12:// para fundação 2
-                    fundacaoAtual = fundacao2Atual;
-                    System.out.println("Entrou no case");
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 13:// para fundação 3
-                    fundacaoAtual = fundacao3Atual;
-                    System.out.println("Entrou no case");
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 14:// para fundação 4
-                    fundacaoAtual = fundacao4Atual;
-                    System.out.println("Entrou no case");
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                }
-            } else if (pilhaDestino < 10) {// é pra um tableau
-
-                switch (pilhaDestino) {
-                case 1:// para tableau 1
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
-                    break;
-                case 2:// para tableau 2
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
-                    break;
-                case 3:// para tableau 3
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
-                    break;
-                case 4:// para tableau 4
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
-                    break;
-                case 5:// para tableau 5
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
-                    break;
-                case 6:// para tableau 6
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
-                    break;
-                case 7:// para tableau 7
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
-                    break;
-                }
-            }
-            break;
-        case 4:// move cartas do tableau2 para outros tableaus ou fundações
-            pilhaDestino = perguntaProUsuarioDestino(2);
-            tableauAtual = tableau2Atual;
-            System.out.println("A pilha destino foi num: " + pilhaDestino);
-
-            if (pilhaDestino > 10) {// é pra uma fundação
-                switch (pilhaDestino) {
-                case 11:// para fundação 1
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao1Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 12:// para fundação 2
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao2Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 13:// para fundação 3
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao3Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 14:// para fundação 4
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao4Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                }
-            } else if (pilhaDestino < 10) {// é pra um tableau
-
-                switch (pilhaDestino) {
-                case 1:// para tableau 1
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
-                    break;
-                case 2:// para tableau 2
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
-                    break;
-                case 3:// para tableau 3
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
-                    break;
-                case 4:// para tableau 4
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
-                    break;
-                case 5:// para tableau 5
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
-                    break;
-                case 6:// para tableau 6
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
-                    break;
-                case 7:// para tableau 7
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
-                    break;
-                }
-            }
-            break;
-        case 5:// move cartas do tableau3 para outros tableaus ou fundações
-            pilhaDestino = perguntaProUsuarioDestino(3);
-            tableauAtual = tableau3Atual;
-
-            System.out.println("A pilha destino foi num: " + pilhaDestino);
-
-            if (pilhaDestino > 10) {// é pra uma fundação
-                switch (pilhaDestino) {
-                case 11:// para fundação 1
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao1Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 12:// para fundação 2
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao2Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 13:// para fundação 3
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao3Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 14:// para fundação 4
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao4Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                }
-            } else if (pilhaDestino < 10) {// é pra um tableau
-
-                switch (pilhaDestino) {
-                case 1:// para tableau 1
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
-                    break;
-                case 2:// para tableau 2
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
-                    break;
-                case 3:// para tableau 3
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
-                    break;
-                case 4:// para tableau 4
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
-                    break;
-                case 5:// para tableau 5
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
-                    break;
-                case 6:// para tableau 6
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
-                    break;
-                case 7:// para tableau 7
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
-                    break;
-                }
-            }
-            break;
-        case 6:// move cartas do tableau4 para outros tableaus ou fundações
-            pilhaDestino = perguntaProUsuarioDestino(4);
-            tableauAtual = tableau4Atual;
-
-            System.out.println("A pilha destino foi num: " + pilhaDestino);
-
-            if (pilhaDestino > 10) {// é pra uma fundação
-                switch (pilhaDestino) {
-                case 11:// para fundação 1
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao1Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 12:// para fundação 2
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao2Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 13:// para fundação 3
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao3Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 14:// para fundação 4
-                    System.out.println("Entrou no case");
-                    fundacaoAtual = fundacao4Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                }
-            } else if (pilhaDestino < 10) {// é pra um tableau
-
-                switch (pilhaDestino) {
-                case 1:// para tableau 1
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
-                    break;
-                case 2:// para tableau 2
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
-                    break;
-                case 3:// para tableau 3
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
-                    break;
-                case 4:// para tableau 4
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
-                    break;
-                case 5:// para tableau 5
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
-                    break;
-                case 6:// para tableau 6
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
-                    break;
-                case 7:// para tableau 7
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
-                    break;
-                }
-            }
-            break;
-        case 7:// move cartas do tableau5 para outros tableaus ou fundações
-            pilhaDestino = perguntaProUsuarioDestino(5);
-            tableauAtual = tableau5Atual;
-
-            if (pilhaDestino > 10) {// é pra uma fundação
-                switch (pilhaDestino) {
-                case 11:// para fundação 1
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao1Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 12:// para fundação 2
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao2Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 13:// para fundação 3
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao3Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 14:// para fundação 4
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao4Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                }
-            } else if (pilhaDestino < 10) {// é pra um tableau
-
-                switch (pilhaDestino) {
-                case 1:// para tableau 1
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
-                    break;
-                case 2:// para tableau 2
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
-                    break;
-                case 3:// para tableau 3
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
-                    break;
-                case 4:// para tableau 4
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
-                    break;
-                case 5:// para tableau 5
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
-                    break;
-                case 6:// para tableau 6
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
-                    break;
-                case 7:// para tableau 7
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
-                    break;
-                }
-            }
-            break;
-        case 8:// move cartas do tableau6 para outros tableaus ou fundações
-            pilhaDestino = perguntaProUsuarioDestino(6);
-            tableauAtual = tableau6Atual;
-
-            if (pilhaDestino > 10) {// é pra uma fundação
-                switch (pilhaDestino) {
-                case 11:// para fundação 1
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao1Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 12:// para fundação 2
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao2Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 13:// para fundação 3
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao3Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 14:// para fundação 4
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao4Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                }
-            } else if (pilhaDestino < 10) {// é pra um tableau
-
-                switch (pilhaDestino) {
-                case 1:// para tableau 1
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
-                    break;
-                case 2:// para tableau 2
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
-                    break;
-                case 3:// para tableau 3
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
-                    break;
-                case 4:// para tableau 4
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
-                    break;
-                case 5:// para tableau 5
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
-                    break;
-                case 6:// para tableau 6
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
-                    break;
-                case 7:// para tableau 7
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
-                    break;
-                }
-            }
-            break;
-        case 9:// move cartas do tableau7 para outros tableaus ou fundações
-            pilhaDestino = perguntaProUsuarioDestino(7);
-            tableauAtual = tableau7Atual;
-
-            if (pilhaDestino > 10) {// é pra uma fundação
-                switch (pilhaDestino) {
-                case 11:// para fundação 1
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao1Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 12:// para fundação 2
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao2Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 13:// para fundação 3
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao3Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                case 14:// para fundação 4
-                    System.out.println("entrou no case");
-                    fundacaoAtual = fundacao4Atual;
-                    moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
-                    break;
-                }
-            } else if (pilhaDestino < 10) {// é pra um tableau
-
-                switch (pilhaDestino) {
-                case 1:// para tableau 1
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau1Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau1Atual);// args: tableau atual e tableau de destino
-                    break;
-                case 2:// para tableau 2
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau2Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau2Atual);
-                    break;
-                case 3:// para tableau 3
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau3Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau3Atual);
-                    break;
-                case 4:// para tableau 4
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau4Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau4Atual);
-                    break;
-                case 5:// para tableau 5
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau5Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau5Atual);
-                    break;
-                case 6:// para tableau 6
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau6Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau6Atual);
-                    break;
-                case 7:// para tableau 7
-                    confereSeUmDosTableausEstaVazio(tableauAtual, tableau7Atual);
-                    moveDoTableauParaTableaus(tableauAtual, tableau7Atual);
-                    break;
-                }
-            }
-            break;
-        case 10:
-            exibeJogo();
-            break;
-        default:
-            System.out.println("#Valor inválido");
-            moverCarta();
+                break;
+            case 11:
+                exibeJogo();
+                break;
+            default:
+                System.out.println("#Valor inválido");
+                moverCarta();
         }
 
     }
