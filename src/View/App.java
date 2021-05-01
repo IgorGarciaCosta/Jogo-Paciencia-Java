@@ -30,46 +30,47 @@ public class App {
         }
 
         switch (selecao) {
-        case 1:
-            if (controle.getStatusDeInicio()) {
-                controle.moverCarta();
+            case 1:
+                if (controle.getStatusDeInicio()) {
+                    controle.moverCarta();
+                    controle.exibeJogo();
+                } else {
+                    System.out.println(
+                            "#Você tentou mover uma carta sem iniciar o jogo. Por gentileza, selecione 'EXIBIR JOGO' antes.");
+                }
+                break;
+
+            case 2:
                 controle.exibeJogo();
-            } else {
-                System.out.println("#Você tentou mover uma carta sem iniciar o jogo. Por gentileza, selecione 'EXIBIR JOGO' antes.");
-            }
-            break;
+                break;
 
-        case 2:
-            controle.exibeJogo();
-            break;
+            case 3:
+                System.out.printf("VIRAR 1 OU 3 CARTAS DO ESTOQUE? ");
+                try {
+                    selecaoDeNumDeCartas = resp.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.println("#Valor inválido. Digite números.\n");
+                    menu();
+                }
+                if (selecaoDeNumDeCartas != 1 && selecaoDeNumDeCartas != 3) {
+                    System.out.println("#Valor inválido");
+                    menu();
+                } else
+                    controle.numDeCartasViradasDoEstoque(selecaoDeNumDeCartas);
 
-        case 3:
-            System.out.printf("VIRAR 1 OU 3 CARTAS DO ESTOQUE? ");
-            try {
-                selecaoDeNumDeCartas = resp.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("#Valor inválido. Digite números.\n");
-                menu();
-            }
-            if (selecaoDeNumDeCartas != 1 && selecaoDeNumDeCartas != 3) {
+                break;
+
+            case 4:
+                controle.reiniciar();
+                break;
+            case 5:
+                System.out.println("\nObrigado por jogar!");
+                controle.finalizaJogo();
+                break;
+
+            default:
                 System.out.println("#Valor inválido");
                 menu();
-            } else
-                controle.numDeCartasViradasDoEstoque(selecaoDeNumDeCartas);
-
-            break;
-
-        case 4:
-            controle.reiniciar();
-            break;
-        case 5:
-            System.out.println("\nObrigado por jogar!");
-            controle.finalizaJogo();
-            break;
-
-        default:
-            System.out.println("#Valor inválido");
-            menu();
         }
     }
 
