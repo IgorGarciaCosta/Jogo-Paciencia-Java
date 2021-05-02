@@ -23,7 +23,6 @@ public class Controlador {
     static public Stack<Carta> tableau5Atual = new Stack<Carta>();
     static public Stack<Carta> tableau6Atual = new Stack<Carta>();
     static public Stack<Carta> tableau7Atual = new Stack<Carta>();
-    Stack<Carta> tableauTemporario = new Stack<Carta>();
 
     public List<Carta> shuffle() {// mistura as cartas antes do jogo começar.
         b = new Baralho();
@@ -36,7 +35,6 @@ public class Controlador {
         if (!carta.getFace()) {
             System.out.printf("[<>], ");
         } else {
-            // carta = (Carta) tableauAtual.get(i - 1);
             viraPrimeiraCartaDaPilha(carta);
             System.out.printf(", ");
         }
@@ -151,7 +149,7 @@ public class Controlador {
         c.setFace(true);
         if (c.getHierarquia().equals("numero")) {// se for carta de número.
             System.out.printf(c.getNumero() + " " + c.getNaipe());
-        } else if (c.getNumero().equals("sem numero")) {// se for K, D ou J.
+        } else if (c.getNumero().equals("sem numero")) {// se for K, Q ou J.
             System.out.printf(c.getHierarquia() + " " + c.getNaipe());
         }
     }
@@ -247,12 +245,8 @@ public class Controlador {
         Carta cartaDoTableau = new Carta();
 
         if (tableauAtual.empty()) {// se o tableau está vazio, add apenas um Rei ou um Ás
-            System.out.println("ta vazio msm");
-            System.out.println("carta do desc: " + cartaDoDescarte.getNaipe() + cartaDoDescarte.getHierarquia());
             if (cartaDoDescarte.getHierarquia().equals("K")) {
-                System.out.println("entrou");
                 tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
-                System.out.println("tam. do tab. " + tableauAtual.size());
             }
         } else {// se há cartas no tableau, vê se a do descarte é numero ou não.
             cartaDoTableau = tableauAtual.peek();
@@ -260,7 +254,6 @@ public class Controlador {
                 if (cartaDoTableau.getHierarquia().equals("A")) {
                     cartaDoDescarte.setFace(true);
                     tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
-                    System.out.println("tam. do tab. " + tableauAtual.size());
                 }
             }
             if (cartaDoDescarte.getHierarquia().equals("Q")) {
@@ -273,14 +266,12 @@ public class Controlador {
                         if (cartaDoTableau.getNaipe().equals("Copas") || cartaDoTableau.getNaipe().equals("Ouros")) {
                             cartaDoDescarte.setFace(true);
                             tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
-                            System.out.println("tam. do tab. " + tableauAtual.size());
                         }
                     } else if (cartaDoDescarte.getNaipe().equals("Copas")
                             || cartaDoDescarte.getNaipe().equals("Ouros")) {
                         if (cartaDoTableau.getNaipe().equals("Espadas") || cartaDoTableau.getNaipe().equals("Paus")) {
                             cartaDoDescarte.setFace(true);
                             tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
-                            System.out.println("tam. do tab. " + tableauAtual.size());
                         }
                     }
 
@@ -292,14 +283,12 @@ public class Controlador {
                         if (cartaDoTableau.getNaipe().equals("Copas") || cartaDoTableau.getNaipe().equals("Ouros")) {
                             cartaDoDescarte.setFace(true);
                             tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
-                            System.out.println("tam. do tab. " + tableauAtual.size());
                         }
                     } else if (cartaDoDescarte.getNaipe().equals("Copas")
                             || cartaDoDescarte.getNaipe().equals("Ouros")) {
                         if (cartaDoTableau.getNaipe().equals("Espadas") || cartaDoTableau.getNaipe().equals("Paus")) {
                             cartaDoDescarte.setFace(true);
                             tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca na tableau.
-                            System.out.println("tam. do tab. " + tableauAtual.size());
                         }
                     }
                 }
@@ -311,14 +300,12 @@ public class Controlador {
                         if (cartaDoTableau.getNaipe().equals("Copas") || cartaDoTableau.getNaipe().equals("Ouros")) {
                             cartaDoDescarte.setFace(true);
                             tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca no tableau
-                            System.out.println("tam. do tab. " + tableauAtual.size());
                         }
                     } else if (cartaDoDescarte.getNaipe().equals("Copas")
                             || cartaDoDescarte.getNaipe().equals("Ouros")) {
                         if (cartaDoTableau.getNaipe().equals("Espadas") || cartaDoTableau.getNaipe().equals("Paus")) {
                             cartaDoDescarte.setFace(true);
                             tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca no tableau
-                            System.out.println("tam. do tab. " + tableauAtual.size());
                         }
                     }
                 }
@@ -328,7 +315,6 @@ public class Controlador {
             else {// se forem ambas cartas de número.
                 int numCartaDeDescarte = Integer.parseInt(cartaDoDescarte.getNumero());
                 int numCartaDeTableau = Integer.parseInt(cartaDoTableau.getNumero());
-                System.out.println("Nums. das cartas desc tab: " + numCartaDeDescarte + " " + numCartaDeTableau);
                 if (cartaDoDescarte.getNaipe().equals("Espadas") || cartaDoDescarte.getNaipe().equals("Paus")) {// se
                                                                                                                 // a
                                                                                                                 // carta
@@ -344,7 +330,6 @@ public class Controlador {
                         if (numCartaDeDescarte == (numCartaDeTableau - 1)) {
                             cartaDoDescarte.setFace(true);
                             tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca no tableau
-                            System.out.println("tam. do tab. " + tableauAtual.size());
                         }
                     }
                 } else if (cartaDoDescarte.getNaipe().equals("Copas") || cartaDoDescarte.getNaipe().equals("Ouros")) {
@@ -352,7 +337,6 @@ public class Controlador {
                         if (numCartaDeDescarte == (numCartaDeTableau - 1)) {
                             cartaDoDescarte.setFace(true);
                             tableauAtual.push(descarteAtual.pop());// tira do descarte e coloca no tableau
-                            System.out.println("tam. do tab. " + tableauAtual.size());
                         }
                     }
                 }
@@ -362,7 +346,6 @@ public class Controlador {
     }
 
     public int perguntaProUsuarioDestino(int numDoTableauAtual) {
-        System.out.println("tab arigem: " + numDoTableauAtual);
         Scanner resp = new Scanner(System.in);
         int selecao = 0;
         int numtableauSelecionado = 0;
@@ -390,35 +373,28 @@ public class Controlador {
                 return 14;
             case 5:
                 numtableauSelecionado = 1;
-                System.out.println("num do tab dest: " + numtableauSelecionado);
                 return 1;
             case 6:
                 numtableauSelecionado = 2;
-                System.out.println("num do tab dest: " + numtableauSelecionado);
                 return 2;
             case 7:
                 numtableauSelecionado = 3;
-                System.out.println("num do tab dest: " + numtableauSelecionado);
                 return 3;
             case 8:
                 numtableauSelecionado = 4;
-                System.out.println("num do tab dest: " + numtableauSelecionado);
                 return 4;
             case 9:
                 numtableauSelecionado = 5;
-                System.out.println("num do tab dest: " + numtableauSelecionado);
                 return 5;
             case 10:
                 numtableauSelecionado = 6;
-                System.out.println("num do tab dest: " + numtableauSelecionado);
                 return 6;
             case 11:
                 numtableauSelecionado = 7;
-                System.out.println("num do tab dest: " + numtableauSelecionado);
                 return 7;
             case 12:
                 moverCarta();
-                break;  
+                break;
 
         }
 
@@ -467,16 +443,10 @@ public class Controlador {
     public void moveDoTableauParaFundacoes(Stack<Carta> tableauAtual, Stack<Carta> fundacaoAtual) {
         Carta cartaTableau = tableauAtual.peek();
 
-        System.out.println("Carta do tab: " + cartaTableau.getHierarquia() + cartaTableau.getNaipe());
-
-        System.out.println("Entrou na função de mover");
-
         if (fundacaoAtual.empty()) {// caso a fundação esteja vazia
-            System.out.println("Fund tava vazia");
             if (cartaTableau.getHierarquia().equals("A")) {// se a carta for um Ás
                 fundacaoAtual.push(tableauAtual.pop());// tira do descarte e coloca na fundação
                 viraCartaDoTabSeForPrimeira(tableauAtual);
-                System.out.println("tam da fun agr: " + fundacaoAtual.size());
             }
         }
 
@@ -526,7 +496,6 @@ public class Controlador {
             if (cartaDoTableauOrigem.getNaipe().equals("K")) {
                 tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca na tableau.
                 viraCartaDoTabSeForPrimeira(tableauAtual);
-                System.out.println("tam. do tab. " + tableauDestino.size());
             }
         } else {// se há cartas no tableau, vê se a do descarte é numero ou não.
             if (cartaDoTableauOrigem.getHierarquia().equals("K")) {// se vier um K, so add se houver um A
@@ -534,7 +503,6 @@ public class Controlador {
                     cartaDoTableauOrigem.setFace(true);
                     tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca na tableau.
                     viraCartaDoTabSeForPrimeira(tableauAtual);
-                    System.out.println("tam. do tab. " + tableauDestino.size());
                 }
             }
             if (cartaDoTableauOrigem.getHierarquia().equals("Q")) {
@@ -550,7 +518,6 @@ public class Controlador {
                             cartaDoTableauOrigem.setFace(true);
                             tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca na tableau.
                             viraCartaDoTabSeForPrimeira(tableauAtual);
-                            System.out.println("tam. do tab. " + tableauDestino.size());
                         }
                     } else if (cartaDoTableauOrigem.getNaipe().equals("Copas")
                             || cartaDoTableauOrigem.getNaipe().equals("Ouros")) {
@@ -559,7 +526,6 @@ public class Controlador {
                             cartaDoTableauOrigem.setFace(true);
                             tableauDestino.push(tableauAtual.pop());
                             viraCartaDoTabSeForPrimeira(tableauAtual);
-                            System.out.println("tam. do tab. " + tableauDestino.size());
                         }
                     }
 
@@ -574,7 +540,6 @@ public class Controlador {
                             cartaDoTableauOrigem.setFace(true);
                             tableauDestino.push(tableauAtual.pop());
                             viraCartaDoTabSeForPrimeira(tableauAtual);
-                            System.out.println("tam. do tab. " + tableauDestino.size());
                         }
                     } else if (cartaDoTableauOrigem.getNaipe().equals("Copas")
                             || cartaDoTableauOrigem.getNaipe().equals("Ouros")) {
@@ -583,7 +548,6 @@ public class Controlador {
                             cartaDoTableauOrigem.setFace(true);
                             tableauDestino.push(tableauAtual.pop());
                             viraCartaDoTabSeForPrimeira(tableauAtual);
-                            System.out.println("tam. do tab. " + tableauDestino.size());
                         }
                     }
                 }
@@ -600,7 +564,6 @@ public class Controlador {
                             cartaDoTableauOrigem.setFace(true);
                             tableauDestino.push(tableauAtual.pop());
                             viraCartaDoTabSeForPrimeira(tableauAtual);
-                            System.out.println("tam. do tab. " + tableauDestino.size());
                         }
                     } else if (cartaDoTableauOrigem.getNaipe().equals("Copas")
                             || cartaDoTableauOrigem.getNaipe().equals("Ouros")) {
@@ -609,7 +572,6 @@ public class Controlador {
                             cartaDoTableauOrigem.setFace(true);
                             tableauDestino.push(tableauAtual.pop());
                             viraCartaDoTabSeForPrimeira(tableauAtual);
-                            System.out.println("tam. do tab. " + tableauDestino.size());
                         }
                     }
                 }
@@ -629,7 +591,6 @@ public class Controlador {
                             cartaDoTableauOrigem.setFace(true);
                             tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca na tableau.
                             viraCartaDoTabSeForPrimeira(tableauAtual);
-                            System.out.println("tam. do tab. " + tableauDestino.size());
                         }
                     } else if (cartaDoTableauOrigem.getNaipe().equals("Copas")
                             || cartaDoTableauOrigem.getNaipe().equals("Ouros")) {
@@ -638,7 +599,6 @@ public class Controlador {
                             cartaDoTableauOrigem.setFace(true);
                             tableauDestino.push(tableauAtual.pop());
                             viraCartaDoTabSeForPrimeira(tableauAtual);
-                            System.out.println("tam. do tab. " + tableauDestino.size());
                         }
                     }
 
@@ -665,7 +625,6 @@ public class Controlador {
             } else {// se forem ambas cartas de número.
                 int numCartaDeDescarte = Integer.parseInt(cartaDoTableauOrigem.getNumero());
                 int numCartaDeTableau = Integer.parseInt(cartaDoTableauDestino.getNumero());
-                System.out.println("Nums. das cartas desc tab: " + numCartaDeDescarte + " " + numCartaDeTableau);
                 if (cartaDoTableauOrigem.getNaipe().equals("Espadas")
                         || cartaDoTableauOrigem.getNaipe().equals("Paus")) {// se a carta do tab. de origem não é 10,
                                                                             // confere o naipe.
@@ -675,7 +634,6 @@ public class Controlador {
                             cartaDoTableauOrigem.setFace(true);
                             tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca no tableau
                             viraCartaDoTabSeForPrimeira(tableauAtual);
-                            System.out.println("tam. do tab. " + tableauDestino.size());
                         }
                     }
                 } else if (cartaDoTableauOrigem.getNaipe().equals("Copas")
@@ -686,7 +644,6 @@ public class Controlador {
                             cartaDoTableauOrigem.setFace(true);
                             tableauDestino.push(tableauAtual.pop());// tira do descarte e coloca no tableau
                             viraCartaDoTabSeForPrimeira(tableauAtual);
-                            System.out.println("tam. do tab. " + tableauDestino.size());
                         }
                     }
                 }
@@ -737,11 +694,11 @@ public class Controlador {
                 } else if (!cartaAuxiliar.getFace()) {// carta virada pra baixo
                     System.out
                             .println("#Você selecionou uma carta virada para baixo. Por gentileza, escolha novamente.");
+                    retornaCartas(tableauEscolhido, cartasRetiradas);
                     moverCarta();
                 }
 
             }
-            viraCartaDoTabSeForPrimeira(tableauEscolhido);
             return cartasRetiradas;
 
         }
@@ -761,12 +718,9 @@ public class Controlador {
                                                                                             // outro tableau
 
         Carta cartaAuxiliar = new Carta();
-        System.out.println("cartas tiradas: " + cartasRetiradas.size());
-        for (int i = 0; i < cartasRetiradas.size(); i++) {// preenche a pilha auxiliar
-
+        int size = cartasRetiradas.size();
+        for (int i = 0; i < size; i++) {// preenche a pilha auxiliar
             cartaAuxiliar = cartasRetiradas.pop();
-            System.out.println(cartaAuxiliar.getNumero() + cartaAuxiliar.getHierarquia() + cartaAuxiliar.getNaipe()
-                    + cartaAuxiliar.getFace());
             tableauDeRetorno.push(cartaAuxiliar);
         }
 
@@ -777,7 +731,7 @@ public class Controlador {
         int selecao = 0;
 
         System.out.println(
-                "\nDIGITE PARA QUAL TABLEAU MOVER AS CARTAS:\n1 - TABLEAU1\n2 - TABLEAU2\n3 - TABLEAU3\n4 - TABLEAU4\n5 - TABLEAU5\n6 - TABLEAU6\n7 - TABLEAU7\n");
+                "\nDIGITE PARA QUAL TABLEAU MOVER AS CARTAS:\n1 - TABLEAU1\n2 - TABLEAU2\n3 - TABLEAU3\n4 - TABLEAU4\n5 - TABLEAU5\n6 - TABLEAU6\n7 - TABLEAU7\n8 - VOLTAR");
 
         System.out.printf("Opção escolhida: ");
         try {
@@ -811,11 +765,39 @@ public class Controlador {
             case 7:
                 adicionaCartasAoTableau(tableau7Atual, cartasRetiradas, tableauDeOrigem);
                 break;
+            case 8:
+                moverCarta();
+                break;
             default:
                 System.out.println("#Valor inválido");
                 moverCarta();
 
         }
+    }
+
+    public void confereCartasPraBaixo() {
+        Carta cartaAux = new Carta();
+        cartaAux = tableau1Atual.peek();
+        if (!cartaAux.getFace())
+            cartaAux.setFace(true);
+        cartaAux = tableau2Atual.peek();
+        if (!cartaAux.getFace())
+            cartaAux.setFace(true);
+        cartaAux = tableau3Atual.peek();
+        if (!cartaAux.getFace())
+            cartaAux.setFace(true);
+        cartaAux = tableau4Atual.peek();
+        if (!cartaAux.getFace())
+            cartaAux.setFace(true);
+        cartaAux = tableau5Atual.peek();
+        if (!cartaAux.getFace())
+            cartaAux.setFace(true);
+        cartaAux = tableau6Atual.peek();
+        if (!cartaAux.getFace())
+            cartaAux.setFace(true);
+        cartaAux = tableau7Atual.peek();
+        if (!cartaAux.getFace())
+            cartaAux.setFace(true);
     }
 
     public void adicionaCartasAoTableau(Stack<Carta> tableauEscolhido, Stack<Carta> cartasRetiradas,
@@ -848,7 +830,7 @@ public class Controlador {
                             if (primeiraCartaDoTab.getNaipe().equals("Copas")
                                     || primeiraCartaDoTab.getNaipe().equals("Ouros")) {
                                 cartaASerAdicionada.setFace(true);
-                                tableauEscolhido.push(cartasRetiradas.pop());// tira do descarte e coloca na tableau.
+                                tableauEscolhido.push(cartasRetiradas.pop());
                                 viraCartaDoTabSeForPrimeira(cartasRetiradas);
                                 System.out.println("tam. do tab. " + tableauEscolhido.size());
                             }
@@ -882,7 +864,6 @@ public class Controlador {
                                 cartaASerAdicionada.setFace(true);
                                 tableauEscolhido.push(cartasRetiradas.pop());
                                 viraCartaDoTabSeForPrimeira(cartasRetiradas);
-                                System.out.println("tam. do tab. " + tableauEscolhido.size());
                             }
                         } else if (cartaASerAdicionada.getNaipe().equals("Copas")
                                 || cartaASerAdicionada.getNaipe().equals("Ouros")) {
@@ -891,15 +872,18 @@ public class Controlador {
                                 cartaASerAdicionada.setFace(true);
                                 tableauEscolhido.push(cartasRetiradas.pop());
                                 viraCartaDoTabSeForPrimeira(cartasRetiradas);
-                                System.out.println("tam. do tab. " + tableauEscolhido.size());
                             } else {
                                 retornaCartas(tableauDeOrigem, cartasRetiradas);
                             }
                         } else {
                             retornaCartas(tableauDeOrigem, cartasRetiradas);
                         }
+                    } else {
+                        retornaCartas(tableauDeOrigem, cartasRetiradas);
                     }
 
+                } else if (cartaASerAdicionada.getHierarquia().equals("K")) {
+                    retornaCartas(tableauDeOrigem, cartasRetiradas);
                 } else if (primeiraCartaDoTab.getHierarquia().equals("J")) {// se a tableau destino é J, vê se a da
                                                                             // pilha de
                                                                             // cartas retiradas é 10
@@ -928,6 +912,8 @@ public class Controlador {
                         } else {
                             retornaCartas(tableauDeOrigem, cartasRetiradas);
                         }
+                    } else {
+                        retornaCartas(tableauDeOrigem, cartasRetiradas);
                     }
 
                 } else if (primeiraCartaDoTab.getHierarquia().equals("Q")) {
@@ -940,7 +926,6 @@ public class Controlador {
                                 cartaASerAdicionada.setFace(true);
                                 tableauEscolhido.push(cartasRetiradas.pop());// tira do descarte e coloca na tableau.
                                 viraCartaDoTabSeForPrimeira(cartasRetiradas);
-                                System.out.println("tam. do tab. " + tableauEscolhido.size());
                             }
                         } else if (cartaASerAdicionada.getNaipe().equals("Copas")
                                 || cartaASerAdicionada.getNaipe().equals("Ouros")) {
@@ -949,7 +934,6 @@ public class Controlador {
                                 cartaASerAdicionada.setFace(true);
                                 tableauEscolhido.push(cartasRetiradas.pop());
                                 viraCartaDoTabSeForPrimeira(cartasRetiradas);
-                                System.out.println("tam. do tab. " + tableauEscolhido.size());
                             } else {
                                 retornaCartas(tableauDeOrigem, cartasRetiradas);
                             }
@@ -971,7 +955,6 @@ public class Controlador {
                                 cartaASerAdicionada.setFace(true);
                                 tableauEscolhido.push(cartasRetiradas.pop());
                                 viraCartaDoTabSeForPrimeira(cartasRetiradas);
-                                System.out.println("tam. do tab. " + tableauEscolhido.size());
                             }
                         } else if (cartaASerAdicionada.getNaipe().equals("Copas")
                                 || cartaASerAdicionada.getNaipe().equals("Ouros")) {
@@ -980,10 +963,11 @@ public class Controlador {
                                 cartaASerAdicionada.setFace(true);
                                 tableauEscolhido.push(cartasRetiradas.pop());
                                 viraCartaDoTabSeForPrimeira(cartasRetiradas);
-                                System.out.println("tam. do tab. " + tableauEscolhido.size());
                             } else {
                                 retornaCartas(tableauDeOrigem, cartasRetiradas);
                             }
+                        } else {
+                            retornaCartas(tableauDeOrigem, cartasRetiradas);
                         }
                     }
 
@@ -991,13 +975,13 @@ public class Controlador {
                         retornaCartas(tableauDeOrigem, cartasRetiradas);
                     }
 
+                } else if (primeiraCartaDoTab.getHierarquia().equals("anObject")) {
+                    retornaCartas(tableauDeOrigem, cartasRetiradas);
                 } else if (cartaASerAdicionada.getHierarquia().equals("A")) {
                     retornaCartas(tableauDeOrigem, cartasRetiradas);
                 } else {// se forem ambas cartas de número.
                     int numCartaASerAdicionada = Integer.parseInt(cartaASerAdicionada.getNumero());
                     int numCartaDeTableau = Integer.parseInt(primeiraCartaDoTab.getNumero());
-                    System.out
-                            .println("Nums. das cartas desc tab: " + numCartaASerAdicionada + " " + numCartaDeTableau);
                     if (cartaASerAdicionada.getNaipe().equals("Espadas")
                             || cartaASerAdicionada.getNaipe().equals("Paus")) {// se
                                                                                // a
@@ -1018,7 +1002,6 @@ public class Controlador {
                                 cartaASerAdicionada.setFace(true);
                                 tableauEscolhido.push(cartasRetiradas.pop());// tira do descarte e coloca no tableau
                                 viraCartaDoTabSeForPrimeira(cartasRetiradas);
-                                System.out.println("tam. do tab. " + tableauEscolhido.size());
                             } else {
                                 retornaCartas(tableauDeOrigem, cartasRetiradas);
                             }
@@ -1033,7 +1016,6 @@ public class Controlador {
                                 cartaASerAdicionada.setFace(true);
                                 tableauEscolhido.push(cartasRetiradas.pop());// tira do descarte e coloca no tableau
                                 viraCartaDoTabSeForPrimeira(cartasRetiradas);
-                                System.out.println("tam. do tab. " + tableauEscolhido.size());
                             }
                         } else {
                             retornaCartas(tableauDeOrigem, cartasRetiradas);
@@ -1047,6 +1029,7 @@ public class Controlador {
 
         }
 
+        confereCartasPraBaixo();
     }
 
     public void moverCarta() {// comporta toda a lógica do movimento das cartas
@@ -1070,7 +1053,7 @@ public class Controlador {
         switch (selecao) {// seleciona de qual pilha movera uma carta
             case 1:// move carta do estoque para o descarte
                 if (estoqueAtual.empty())
-                    System.out.println("\nO estoque está vazio. :/");
+                    System.out.println("\n#O estoque está vazio. :/");
                 else {
                     for (int i = 0; i < numDeCartasDoEstoque; i++) {
                         descarteAtual.push(estoqueAtual.pop());
@@ -1134,7 +1117,6 @@ public class Controlador {
                             moveDoDescarteParaTableaus(cartaDoDescarte, tableau7Atual);
                             break;
                         default:
-                            System.out.println("valor do selecaoFund: " + selecaoFund);
                             System.out.println("#Valor inválido");
                             moverCarta();
                             break;
@@ -1204,27 +1186,22 @@ public class Controlador {
             case 4:// move cartas do tableau2 para outros tableaus ou fundações
                 pilhaDestino = perguntaProUsuarioDestino(2);
                 tableauAtual = tableau2Atual;
-                System.out.println("A pilha destino foi num: " + pilhaDestino);
 
                 if (pilhaDestino > 10) {// é pra uma fundação
                     switch (pilhaDestino) {
                         case 11:// para fundação 1
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao1Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 12:// para fundação 2
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao2Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 13:// para fundação 3
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao3Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 14:// para fundação 4
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao4Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
@@ -1267,28 +1244,21 @@ public class Controlador {
             case 5:// move cartas do tableau3 para outros tableaus ou fundações
                 pilhaDestino = perguntaProUsuarioDestino(3);
                 tableauAtual = tableau3Atual;
-
-                System.out.println("A pilha destino foi num: " + pilhaDestino);
-
                 if (pilhaDestino > 10) {// é pra uma fundação
                     switch (pilhaDestino) {
                         case 11:// para fundação 1
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao1Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 12:// para fundação 2
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao2Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 13:// para fundação 3
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao3Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 14:// para fundação 4
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao4Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
@@ -1332,27 +1302,21 @@ public class Controlador {
                 pilhaDestino = perguntaProUsuarioDestino(4);
                 tableauAtual = tableau4Atual;
 
-                System.out.println("A pilha destino foi num: " + pilhaDestino);
-
                 if (pilhaDestino > 10) {// é pra uma fundação
                     switch (pilhaDestino) {
                         case 11:// para fundação 1
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao1Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 12:// para fundação 2
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao2Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 13:// para fundação 3
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao3Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 14:// para fundação 4
-                            System.out.println("Entrou no case");
                             fundacaoAtual = fundacao4Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
@@ -1399,22 +1363,18 @@ public class Controlador {
                 if (pilhaDestino > 10) {// é pra uma fundação
                     switch (pilhaDestino) {
                         case 11:// para fundação 1
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao1Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 12:// para fundação 2
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao2Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 13:// para fundação 3
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao3Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 14:// para fundação 4
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao4Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
@@ -1461,22 +1421,18 @@ public class Controlador {
                 if (pilhaDestino > 10) {// é pra uma fundação
                     switch (pilhaDestino) {
                         case 11:// para fundação 1
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao1Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 12:// para fundação 2
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao2Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 13:// para fundação 3
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao3Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 14:// para fundação 4
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao4Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
@@ -1523,22 +1479,18 @@ public class Controlador {
                 if (pilhaDestino > 10) {// é pra uma fundação
                     switch (pilhaDestino) {
                         case 11:// para fundação 1
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao1Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 12:// para fundação 2
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao2Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 13:// para fundação 3
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao3Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
                         case 14:// para fundação 4
-                            System.out.println("entrou no case");
                             fundacaoAtual = fundacao4Atual;
                             moveDoTableauParaFundacoes(tableauAtual, fundacaoAtual);
                             break;
